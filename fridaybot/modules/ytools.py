@@ -87,7 +87,7 @@ async def _(event):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(mo, download=True)
     except Exception as e:
-        await tr(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     await asyncio.sleep(20)
     c_time = time.time()
@@ -163,7 +163,7 @@ async def _(event):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
-        await tr(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
@@ -244,7 +244,7 @@ async def _(event):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except Exception as e:
-        await tr(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     await asyncio.sleep(20)
     c_time = time.time()
