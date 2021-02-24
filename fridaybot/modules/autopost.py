@@ -17,7 +17,7 @@ from telethon import events
 @bot.on(admin_cmd(pattern="autopost ?(.*)"))
 async def lol(event):
     if (event.is_private or event.is_group):
-        await event.edit("`Only Channels Can Use THis Feature.`")
+        await friday.tr_engine(event, "`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
     if str(sed).startswith("-100"):
@@ -25,18 +25,18 @@ async def lol(event):
     else:
         kk = sed
     if not kk.isdigit():
-        await event.edit("`Channel ID Should be Integers`")
+        await friday.tr_engine(event, "`Channel ID Should be Integers`")
         return
     if is_post_data_in_db(kk , event.chat_id):
-        await event.edit("Ah, This Channel Is Already DB")
+        await friday.tr_engine(event, "Ah, This Channel Is Already DB")
         return
     add_new_post_data_in_db(kk, event.chat_id)
-    await event.edit(f"`Added AutoPosting To This Chat From {sed}`")
+    await friday.tr_engine(event, f"`Added AutoPosting To This Chat From {sed}`")
 
 @bot.on(admin_cmd(pattern="rmautopost ?(.*)"))
 async def lol(event):
     if (event.is_private or event.is_group):
-        await event.edit("`Only Channels Can Use THis Feature.`")
+        await friday.tr_engine(event, "`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
     if str(sed).startswith("-100"):
@@ -44,13 +44,13 @@ async def lol(event):
     else:
         kk = sed
     if not kk.isdigit():
-        await event.edit("`Channel ID Should be Integers`")
+        await friday.tr_engine(event, "`Channel ID Should be Integers`")
         return
     if not is_post_data_in_db(kk, event.chat_id):
-        await event.edit("Ah, This Channel Is Not In DB")
+        await friday.tr_engine(event, "Ah, This Channel Is Not In DB")
         return
     remove_post_data(kk, event.chat_id)
-    await event.edit(f"`Oh, Okay I will Stop Posting From {sed}.`")
+    await friday.tr_engine(event, f"`Oh, Okay I will Stop Posting From {sed}.`")
 
 @bot.on(events.NewMessage())
 async def what(event):

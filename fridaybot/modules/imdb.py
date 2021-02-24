@@ -87,7 +87,7 @@ async def imdb(e):
                 mov_rating = r.strong["title"]
         else:
             mov_rating = "Not available"
-        await e.edit(
+        await friday.tr_engine(event, 
             "<a href=" + poster + ">&#8203;</a>"
             "<b>Title : </b><code>"
             + mov_title
@@ -113,7 +113,7 @@ async def imdb(e):
             parse_mode="HTML",
         )
     except IndexError:
-        await e.edit("Plox enter **Valid movie name** kthx")
+        await friday.tr_engine(event, "Plox enter **Valid movie name** kthx")
 
 
 CMD_HELP.update(

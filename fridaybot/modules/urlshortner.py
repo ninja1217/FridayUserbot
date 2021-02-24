@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun Km 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -30,9 +30,9 @@ async def vom(event):
             f"<b>Url Shortened</b> \n<b><u>Given Link</u></b> ➠ {link}\n"
             f"<b><u>Shortened Link</u></b> ➠ {kek}"
         )
-        await event.edit(bestisbest, parse_mode="HTML")
+        await friday.tr_engine(event, bestisbest, parse_mode="HTML")
     except Exception as e:
-        await event.edit("SomeThing Went Wrong. \nError : " + e)
+        await friday.tr_engine(event, "SomeThing Went Wrong. \nError : " + e)
 
 
 CMD_HELP.update(

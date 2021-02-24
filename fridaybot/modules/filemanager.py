@@ -38,7 +38,7 @@ async def _(event):
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -48,13 +48,13 @@ async def _(event):
             )
             await event.delete()
     if stderr.decode():
-        await event.edit(f"**{stderr.decode()}**")
+        await friday.tr_engine(event, f"**{stderr.decode()}**")
         return
-    await event.edit(f"{OUTPUT}`{stdout.decode()}`")
+    await friday.tr_engine(event, f"{OUTPUT}`{stdout.decode()}`")
 
 
 #    else:
-#        await event.edit("Unknown Command")
+#        await friday.tr_engine(event, "Unknown Command")
 
 
 @friday.on(friday_on_cmd(pattern=r"lsroot"))
@@ -76,7 +76,7 @@ async def _(event):
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -86,9 +86,9 @@ async def _(event):
             )
             await event.delete()
     if stderr.decode():
-        await event.edit(f"**{stderr.decode()}**")
+        await friday.tr_engine(event, f"**{stderr.decode()}**")
         return
-    await event.edit(f"{OUTPUT}`{stdout.decode()}`")
+    await friday.tr_engine(event, f"{OUTPUT}`{stdout.decode()}`")
 
 
 @friday.on(friday_on_cmd(pattern=r"lssaved"))
@@ -110,7 +110,7 @@ async def _(event):
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -120,9 +120,9 @@ async def _(event):
             )
             await event.delete()
     if stderr.decode():
-        await event.edit(f"**{stderr.decode()}**")
+        await friday.tr_engine(event, f"**{stderr.decode()}**")
         return
-    await event.edit(f"{OUTPUT}`{stdout.decode()}`")
+    await friday.tr_engine(event, f"{OUTPUT}`{stdout.decode()}`")
 
 
 @friday.on(friday_on_cmd(pattern=r"rnsaved ?(.*)"))
@@ -148,7 +148,7 @@ async def _(event):
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -158,9 +158,9 @@ async def _(event):
             )
             await event.delete()
     if stderr.decode():
-        await event.edit(f"**{stderr.decode()}**")
+        await friday.tr_engine(event, f"**{stderr.decode()}**")
         return
-    await event.edit(f"File renamed `{src}` to `{dst}`")
+    await friday.tr_engine(event, f"File renamed `{src}` to `{dst}`")
 
 
 @friday.on(friday_on_cmd(pattern=r"rnlocal ?(.*)"))
@@ -186,7 +186,7 @@ async def _(event):
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -196,9 +196,9 @@ async def _(event):
             )
             await event.delete()
     if stderr.decode():
-        await event.edit(f"**{stderr.decode()}**")
+        await friday.tr_engine(event, f"**{stderr.decode()}**")
         return
-    await event.edit(f"File renamed `{src}` to `{dst}`")
+    await friday.tr_engine(event, f"File renamed `{src}` to `{dst}`")
 
 
 @friday.on(friday_on_cmd(pattern=r"delsave (.*)"))
@@ -210,10 +210,10 @@ async def handler(event):
 
     if os.path.isfile(pathtofile):
         os.remove(pathtofile)
-        await event.edit("✅ File Deleted 🗑")
+        await friday.tr_engine(event, "✅ File Deleted 🗑")
 
     else:
-        await event.edit("⛔️File Not Found സാധനം കയ്യിലില്ല😬")
+        await friday.tr_engine(event, "⛔️File Not Found സാധനം കയ്യിലില്ല😬")
 
 
 @friday.on(friday_on_cmd(pattern=r"delocal (.*)"))
@@ -225,7 +225,7 @@ async def handler(event):
 
     if os.path.isfile(pathtofile):
         os.remove(pathtofile)
-        await event.edit("✅ File Deleted 🗑")
+        await friday.tr_engine(event, "✅ File Deleted 🗑")
 
     else:
-        await event.edit("⛔️File Not Found സാധനം കയ്യിലില്ല😬")
+        await friday.tr_engine(event, "⛔️File Not Found സാധനം കയ്യിലില്ല😬")

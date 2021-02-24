@@ -12,16 +12,16 @@ async def gizoogle(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    await event.edit("Processing...")
+    await friday.tr_engine(event, "Processing...")
     if not input_str:
-        return await event.edit("I can't gizoogle nothing.")
+        return await friday.tr_engine(event, "I can't gizoogle nothing.")
     else:
         try:
             result = text(input_str)
         except:
             result = "Failed to gizoogle the text."
         finally:
-            return await event.edit(result)
+            return await friday.tr_engine(event, result)
 
 
 def text(input_text: str) -> str:

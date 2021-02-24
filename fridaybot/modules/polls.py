@@ -9,11 +9,11 @@ async def _(event):
         return
     reply_message = await event.get_reply_message()
     if reply_message.media is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "Please reply to a media_type == @gPoll to view the questions and answers"
         )
     elif reply_message.media.poll is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "Please reply to a media_type == @gPoll to view the questions and answers"
         )
     else:
@@ -39,4 +39,4 @@ Answers: \n""".format(
         else:
             for answer in answers:
                 edit_caption += "{}> {}\n".format(answer.option, answer.text)
-        await event.edit(edit_caption)
+        await friday.tr_engine(event, edit_caption)

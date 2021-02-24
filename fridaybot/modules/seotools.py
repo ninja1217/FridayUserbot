@@ -26,7 +26,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    await event.edit("processing please wait ")
+    await friday.tr_engine(event, "processing please wait ")
     site = input_str
     try:
       
@@ -42,7 +42,7 @@ async def _(event):
       await friday.run_cmd(com)
       await event.delete()
     except:
-      await event.edit("Make Sure The Given Website URL is valid.")
+      await friday.tr_engine(event, "Make Sure The Given Website URL is valid.")
     com = "rm seo.html"
     await friday.run_cmd(com)
     await event.delete()

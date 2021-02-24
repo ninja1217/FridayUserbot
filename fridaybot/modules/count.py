@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 #     c = 0 # number of super groups
 #     bc = 0 # number of channels
 #     b = 0 # number of bots
-#     await event.edit("Retrieving Telegram Count(s)")
+#     await friday.tr_engine(event, "Retrieving Telegram Count(s)")
 #     async for d in borg.iter_dialogs(limit=None):
 #         if d.is_user:
 #             if d.entity.bot:
@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 #             logger.info(d.stringify())
 #     end = datetime.now()
 #     ms = (end - start).seconds
-#     await event.edit("""Obtained in {} seconds.
+#     await friday.tr_engine(event, """Obtained in {} seconds.
 # Users:\t{}
 # Groups:\t{}
 # Super Groups:\t{}
@@ -59,7 +59,7 @@ async def stats(
     if event.fwd_from:
         return
     """Command to get stats about the account"""
-    await event.edit("`Collecting stats, Wait Master`")
+    await friday.tr_engine(event, "`Collecting stats, Wait Master`")
     start_time = time.time()
     private_chats = 0
     bots = 0
@@ -130,7 +130,7 @@ async def stats(
     response += f"**Unread Mentions:** {unread_mentions} \n\n"
     response += f"__It Took:__ {stop_time:.02f}s \n"
 
-    await event.edit(response)
+    await friday.tr_engine(event, response)
 
 
 def make_mention(user):

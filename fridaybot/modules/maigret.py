@@ -59,7 +59,7 @@ async def _(event):
     else:
       ommhg = await friday.edit_or_reply(event, "`Server Down. Please Try Again Later.`")
     await ommhg.edit("`Uploading File Now....`")
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

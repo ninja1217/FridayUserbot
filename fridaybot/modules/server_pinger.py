@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -22,24 +22,24 @@ if Config.PING_SERVERS:
     async def _(event):
         if event.fwd_from:
             return
-        await event.edit("`Processing..`")
+        await friday.tr_engine(event, "`Processing..`")
         url = event.text.split(" ", maxsplit=1)[1]
         if warnerstark.is_ping_indb(str(url)):
-            await event.edit("**Server Already Found In Db !**")
+            await friday.tr_engine(event, "**Server Already Found In Db !**")
             return
         warnerstark.add_ping(url)
-        await event.edit(f"**URL :** `{url}` **Sucessfully Added To Db**")
+        await friday.tr_engine(event, f"**URL :** `{url}` **Sucessfully Added To Db**")
     @friday.on(friday_on_cmd(pattern="rping"))
     async def _(event):
         if event.fwd_from:
             return
-        await event.edit("`Processing..`")
+        await friday.tr_engine(event, "`Processing..`")
         url = event.text.split(" ", maxsplit=1)[1]
         if not warnerstark.is_ping_indb(str(url)):
-            await event.edit("**Server Not Found In Db !**")
+            await friday.tr_engine(event, "**Server Not Found In Db !**")
             return
         warnerstark.rmping(url)
-        await event.edit(f"**URL :** `{url}` **Sucessfully Removed From Db**")
+        await friday.tr_engine(event, f"**URL :** `{url}` **Sucessfully Removed From Db**")
     
     async def ping_servers():
         hmm_p = 0

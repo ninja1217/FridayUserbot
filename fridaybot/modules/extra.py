@@ -13,9 +13,9 @@ async def leave(e):
     if e.fwd_from:
         return
     if e.is_private:
-        await event.edit("`I Can't Do That.`")
+        await friday.tr_engine(event, "`I Can't Do That.`")
         return
-    await e.edit(f"My Master {bot.me.first_name} Wishes To Leave This Chat, So Bye.")
+    await friday.tr_engine(event, f"My Master {bot.me.first_name} Wishes To Leave This Chat, So Bye.")
     await e.client.kick_participant(e.chat_id, bot.me.id)
 
 
@@ -26,7 +26,7 @@ async def fun(e):
     t = ";__;"
     for j in range(10):
         t = t[:-1] + "_;"
-        await e.edit(t)
+        await friday.tr_engine(event, t)
 
 
 @friday.on(friday_on_cmd("yo$"))
@@ -36,7 +36,7 @@ async def Ooo(e):
     t = "yo"
     for j in range(15):
         t = t[:-1] + "oo"
-        await e.edit(t)
+        await friday.tr_engine(event, t)
 
 
 @friday.on(friday_on_cmd("Oof$"))
@@ -46,7 +46,7 @@ async def Oof(e):
     t = "Oof"
     for j in range(15):
         t = t[:-1] + "of"
-        await e.edit(t)
+        await friday.tr_engine(event, t)
 
 
 @friday.on(friday_on_cmd("ccry$"))
@@ -54,7 +54,7 @@ async def cry(e):
     if e.fwd_from:
         return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("(;´༎ຶД༎ຶ)")
+        await friday.tr_engine(event, "(;´༎ຶД༎ຶ)")
 
 
 @friday.on(friday_on_cmd("fap$"))
@@ -64,7 +64,7 @@ async def _(event):
     deq = deque(list("🍆✊🏻💦"))
     for _ in range(32):
         await asyncio.sleep(0.1)
-        await event.edit("".join(deq))
+        await friday.tr_engine(event, "".join(deq))
         deq.rotate(1)
 
 

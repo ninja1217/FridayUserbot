@@ -23,7 +23,7 @@ async def _(event):
     elif event.is_private:
         id_s = await event.get_input_chat()
     if not id_s:
-        await event.edit("`Reply To User To Add Him In Contact.`")
+        await friday.tr_engine(event, "`Reply To User To Add Him In Contact.`")
         return
     user_s = await event.client.get_entity(id_s)
     if user_s.last_name is None:
@@ -36,7 +36,7 @@ async def _(event):
         last_name=sed_m, 
         phone='123456', 
         add_phone_privacy_exception=True)) 
-    star = await event.edit("**Added To Contacts SucessFully**")
+    star = await friday.tr_engine(event, "**Added To Contacts SucessFully**")
     await asyncio.sleep(3)
     await star.delete()   
 
@@ -50,9 +50,9 @@ async def _(event):
         await borg(
             functions.account.UpdateProfileRequest(about=bio)  # pylint:disable=E0602
         )
-        await event.edit("Succesfully changed my profile bio")
+        await friday.tr_engine(event, "Succesfully changed my profile bio")
     except Exception as e:  # pylint:disable=C0103,W0703
-        await event.edit(str(e))
+        await friday.tr_engine(event, str(e))
 
 
 @friday.on(friday_on_cmd(pattern="pname ((.|\n)*)"))  # pylint:disable=E0602,W0703
@@ -70,9 +70,9 @@ async def _(event):
                 first_name=first_name, last_name=last_name
             )
         )
-        await event.edit("My name was changed successfully")
+        await friday.tr_engine(event, "My name was changed successfully")
     except Exception as e:  # pylint:disable=C0103,W0703
-        await event.edit(str(e))
+        await friday.tr_engine(event, str(e))
 
 
 @friday.on(friday_on_cmd(pattern="ppic"))  # pylint:disable=E0602
@@ -80,19 +80,19 @@ async def _(event):
     if event.fwd_from:
         return
     reply_message = await event.get_reply_message()
-    await event.edit("Downloading Profile Picture to my local ...")
+    await friday.tr_engine(event, "Downloading Profile Picture to my local ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):  # pylint:disable=E0602
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)  # pylint:disable=E0602
     photo = None
     try:
-        photo = await borg.download_media(  # pylint:disable=E0602
+        photo = await friday.download_media(  # pylint:disable=E0602
             reply_message, Config.TMP_DOWNLOAD_DIRECTORY  # pylint:disable=E0602
         )
     except Exception as e:  # pylint:disable=C0103,W0703
-        await event.edit(str(e))
+        await friday.tr_engine(event, str(e))
     else:
         if photo:
-            await event.edit("now, Uploading to @Telegram ...")
+            await friday.tr_engine(event, "now, Uploading to @Telegram ...")
             file = await borg.upload_file(photo)  # pylint:disable=E0602
             try:
                 await borg(
@@ -101,9 +101,9 @@ async def _(event):
                     )
                 )
             except Exception as e:  # pylint:disable=C0103,W0703
-                await event.edit(str(e))
+                await friday.tr_engine(event, str(e))
             else:
-                await event.edit("My profile picture was succesfully changed")
+                await friday.tr_engine(event, "My profile picture was succesfully changed")
     try:
         os.remove(photo)
     except Exception as e:  # pylint:disable=C0103,W0703

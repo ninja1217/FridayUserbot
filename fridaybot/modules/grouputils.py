@@ -141,7 +141,7 @@ async def get_user_from_event(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.edit("`Pass the User's Username, ID or Reply!`")
+            await friday.tr_engine(event, "`Pass the User's Username, ID or Reply!`")
             return None, None
         if event.message.entities:
             probable_user_mention_entity = event.message.entities[0]
@@ -163,7 +163,7 @@ async def get_user_sender_id(user, event):
     try:
         user_obj = await event.client.get_entity(user)
     except (TypeError, ValueError) as err:
-        await event.edit(str(err))
+        await friday.tr_engine(event, str(err))
         return None
 
     return user_obj
@@ -492,7 +492,7 @@ async def spider(event):
                     f"CHAT: {event.chat.title}(`{event.chat_id}`)",
                 )
         except UserIdInvalidError:
-            return await event.edit("`Uh oh my mute logic broke!`")
+            return await friday.tr_engine(event, "`Uh oh my mute logic broke!`")
 
 
 # @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
@@ -876,7 +876,7 @@ async def on_snip_list(event):
     if len(OUT_STR) > 4096:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
             out_file.name = "filters.text"
-            await bot.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -907,7 +907,7 @@ async def on_all_snip_delete(event):
         return
     edit_or_reply(event, "Processing....")
     remove_all_filters(event.chat_id)
-    await event.edit(f"filters **in current chat** deleted successfully")
+    await friday.tr_engine(event, f"filters **in current chat** deleted successfully")
     
 @friday.on(events.NewMessage(pattern=r"\#(\S+)", outgoing=True))
 async def on_snip(event):
@@ -931,7 +931,7 @@ async def on_snip(event):
         message_id = event.message.id
         if event.reply_to_msg_id:
             message_id = event.reply_to_msg_id
-        await borg.send_message(
+        await friday.send_message(
             event.chat_id, snip.reply, reply_to=message_id, file=media
         )
         await event.delete()
@@ -965,11 +965,11 @@ async def on_snip_save(event):
             snip.get("hash"),
             snip.get("fr"),
         )
-        await event.edit(
+        await friday.tr_engine(event, 
             "snip {name} saved successfully. Get it with #{name}".format(name=name)
         )
     else:
-        await event.edit("Reply to a message with `snips keyword` to save the snip")
+        await friday.tr_engine(event, "Reply to a message with `snips keyword` to save the snip")
 
 
 @friday.on(friday_on_cmd("snipl"))
@@ -986,7 +986,7 @@ async def on_snip_list(event):
     if len(OUT_STR) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
             out_file.name = "snips.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -996,7 +996,7 @@ async def on_snip_list(event):
             )
             await event.delete()
     else:
-        await event.edit(OUT_STR)
+        await friday.tr_engine(event, OUT_STR)
 
 
 @friday.on(friday_on_cmd("snipd (\S+)"))
@@ -1005,7 +1005,7 @@ async def on_snip_delete(event):
         return
     name = event.pattern_match.group(1)
     remove_snip(name)
-    await event.edit("snip #{} deleted successfully".format(name))
+    await friday.tr_engine(event, "snip #{} deleted successfully".format(name))
 
 @friday.on(friday_on_cmd(pattern="create (b|g|c)(?: |$)(.*)"))
 async def telegraphs(grop):
@@ -1093,16 +1093,16 @@ async def _s(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        await friday.tr_engine(event, "This Command is Meant To Be Used in Chats/Groups")
         return
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-        await event.edit("`Demn, Admins Can't Be Warned`")
+        await friday.tr_engine(event, "`Demn, Admins Can't Be Warned`")
         return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
-        await event.edit("`Demn, Me nOT Admin`")
+        await friday.tr_engine(event, "`Demn, Me nOT Admin`")
         return
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
@@ -1111,20 +1111,20 @@ async def _s(event):
         if soft_warn:
             await friday.kick_participant(event.chat_id, user.id)
             reply = "{} warnings, {} has been kicked!".format(limit, user.id)
-            await event.edit(reply)
+            await friday.tr_engine(event, reply)
         else:
             await friday.edit_permissions(event.chat_id, user.id, view_messages=False)
             reply = "{} warnings, {} has been banned!".format(
                 limit, user.id, user.first_name
             )
-            await event.edit(reply)
+            await friday.tr_engine(event, reply)
         for warn_reason in reasons:
             reply += "\n - {}".format(warn_reason)
     else:
         reply = "{} has {}/{} warnings... watch out!".format(user.id, num_warns, limit)
         if reason:
             reply += "\nReason for last warn:\n{}".format(reason)
-        await event.edit(reply)
+        await friday.tr_engine(event, reply)
 
 
 @friday.on(friday_on_cmd(pattern="rwarn(?: |$)(.*)"))
@@ -1132,19 +1132,19 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        await friday.tr_engine(event, "This Command is Meant To Be Used in Chats/Groups")
         return
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-        await event.edit("Demn, Admins Can't Be Warned")
+        await friday.tr_engine(event, "Demn, Admins Can't Be Warned")
         return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
-        await event.edit("Demn, Me nOT Admin")
+        await friday.tr_engine(event, "Demn, Me nOT Admin")
         return
     sql.reset_warns(user.id, event.chat_id)
-    await event.edit("Warnings have been reset!")
+    await friday.tr_engine(event, "Warnings have been reset!")
 
 
 @friday.on(friday_on_cmd(pattern="allwarns(?: |$)(.*)"))
@@ -1152,7 +1152,7 @@ async def __(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        await friday.tr_engine(event, "This Command is Meant To Be Used in Chats/Groups")
         return
     user, reason = await get_user_from_event(event)
     result = sql.get_warns(user.id, event.chat_id)
@@ -1167,15 +1167,15 @@ async def __(event):
             )
             for reason in reasons:
                 text += "- {} \n".format(reason)
-            await event.edit(text)
+            await friday.tr_engine(event, text)
         else:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "User has {}/{} warnings, but no reasons for any of them.".format(
                     num_warns, limit
                 )
             )
     else:
-        await event.edit("This user hasn't got any warnings!")
+        await friday.tr_engine(event, "This user hasn't got any warnings!")
 
 
 @friday.on(friday_on_cmd(pattern="slimit ?(.*)"))
@@ -1183,21 +1183,21 @@ async def m_(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        await friday.tr_engine(event, "This Command is Meant To Be Used in Chats/Groups")
         return
     args = event.pattern_match.group(1)
     if args:
         if args.isdigit():
             if int(args) < 3:
-                await event.edit("The minimum warn limit is 3!")
+                await friday.tr_engine(event, "The minimum warn limit is 3!")
             else:
                 sql.set_warn_limit(event.chat_id, int(args))
-                await event.edit("Updated the warn limit to {}".format(args))
+                await friday.tr_engine(event, "Updated the warn limit to {}".format(args))
         else:
-            await event.edit("Give me a number as an arg!")
+            await friday.tr_engine(event, "Give me a number as an arg!")
     else:
         limit, soft_warn = sql.get_warn_setting(event.chat_id)
-        await event.edit("The current warn limit is {}".format(limit))
+        await friday.tr_engine(event, "The current warn limit is {}".format(limit))
 
 
 @friday.on(friday_on_cmd(pattern="wap ?(.*)"))
@@ -1205,28 +1205,28 @@ async def m_(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        await event.edit("This Command is Meant To Be Used in Chats/groups")
+        await friday.tr_engine(event, "This Command is Meant To Be Used in Chats/groups")
         return
     args = event.pattern_match.group(1)
     if args:
         if args.lower() in ("on", "yes"):
             sql.set_warn_strength(event.chat_id, False)
-            await event.edit("Too many warns will now result in a ban!")
+            await friday.tr_engine(event, "Too many warns will now result in a ban!")
         elif args.lower() in ("off", "no"):
             sql.set_warn_strength(event.chat_id, True)
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Too many warns will now result in a kick! Users will be able to join again after."
             )
         else:
-            await event.edit("I only understand on/yes/no/off!")
+            await friday.tr_engine(event, "I only understand on/yes/no/off!")
     else:
         limit, soft_warn = sql.get_warn_setting(chat.id)
         if soft_warn:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Warns are currently set to **kick** users when they exceed the limits."
             )
         else:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Warns are currently set to **ban** users when they exceed the limits."
             )
 
@@ -1248,7 +1248,7 @@ async def get_user_from_event(event):
             user = int(user)
 
         if not user:
-            await event.edit("`Pass the user's username, id or reply!`")
+            await friday.tr_engine(event, "`Pass the user's username, id or reply!`")
             return
 
         if event.message.entities is not None:
@@ -1261,7 +1261,7 @@ async def get_user_from_event(event):
         try:
             user_obj = await event.client.get_entity(user)
         except (TypeError, ValueError) as err:
-            await event.edit(str(err))
+            await friday.tr_engine(event, str(err))
             return None
 
     return user_obj, extra
@@ -1274,7 +1274,7 @@ async def get_user_sender_id(user, event):
     try:
         user_obj = await event.client.get_entity(user)
     except (TypeError, ValueError) as err:
-        await event.edit(str(err))
+        await friday.tr_engine(event, str(err))
         return None
 
     return user_obj
@@ -1307,10 +1307,10 @@ async def _(event):
         else:
             replied_user = previous_message.sender_id
     else:
-        await event.edit("reply To Message")
+        await friday.tr_engine(event, "reply To Message")
     user_id = replied_user
     caption = """<a href='tg://user?id={}'>{}</a>""".format(user_id, input_str)
-    await event.edit(caption, parse_mode="HTML")
+    await friday.tr_engine(event, caption, parse_mode="HTML")
     
 @friday.on(friday_on_cmd("get_bot ?(.*)"))
 async def _(event):
@@ -1327,7 +1327,7 @@ async def _(event):
         try:
             chat = await borg.get_entity(input_str)
         except Exception as e:
-            await event.edit(str(e))
+            await friday.tr_engine(event, str(e))
             return None
     try:
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsBots):
@@ -1341,7 +1341,7 @@ async def _(event):
                 )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await event.edit(mentions)
+    await friday.tr_engine(event, mentions)
     
 @bot.on(events.ChatAction())  # pylint:disable=E0602
 async def _(event):
@@ -1405,11 +1405,11 @@ async def _(event):
     if msg and msg.media:
         bot_api_file_id = pack_bot_file_id(msg.media)
         add_welcome_setting(event.chat_id, msg.message, True, 0, bot_api_file_id)
-        await event.edit("Welcome note saved. ")
+        await friday.tr_engine(event, "Welcome note saved. ")
     else:
         input_str = event.text.split(None, 1)
         add_welcome_setting(event.chat_id, input_str[1], True, 0, None)
-        await event.edit("Welcome note saved. ")
+        await friday.tr_engine(event, "Welcome note saved. ")
 
 
 @friday.on(friday_on_cmd(pattern="clearwelcome$"))  # pylint:disable=E0602
@@ -1418,7 +1418,7 @@ async def _(event):
         return
     cws = get_current_welcome_settings(event.chat_id)
     rm_welcome_setting(event.chat_id)
-    await event.edit(
+    await friday.tr_engine(event, 
         "Welcome note cleared. "
         + "The previous welcome message was `{}`.".format(cws.custom_welcome_message)
     )
@@ -1430,12 +1430,12 @@ async def _(event):
         return
     cws = get_current_welcome_settings(event.chat_id)
     if hasattr(cws, "custom_welcome_message"):
-        await event.edit(
+        await friday.tr_engine(event, 
             "Welcome note found. "
             + "Your welcome message is\n\n`{}`.".format(cws.custom_welcome_message)
         )
     else:
-        await event.edit("No Welcome Message found")
+        await friday.tr_engine(event, "No Welcome Message found")
         
 CMD_HELP.update(
     {

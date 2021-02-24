@@ -36,7 +36,7 @@ async def _(event):
     try:
 	    a = country.info()
     except:
-	    await event.edit("Country Not Avaiable Currently")
+	    await friday.tr_engine(event, "Country Not Avaiable Currently")
     name = a.get("name")
     bb= a.get("altSpellings")
     hu = ''
@@ -125,7 +125,7 @@ Get Your Own Friday From @FRIDAYCHAT.</b></u>
 """
     
     
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

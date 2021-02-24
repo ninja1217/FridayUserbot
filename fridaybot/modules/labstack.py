@@ -19,7 +19,7 @@ import json
 async def labstack(event):
     if event.fwd_from:
         return
-    await event.edit("Processing...")
+    await friday.tr_engine(event, "Processing...")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if input_str:
@@ -29,7 +29,7 @@ async def labstack(event):
             reply.media, Config.TEMP_DOWNLOAD_DIRECTORY
         )
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             "Reply to a media file or provide a directory to upload the file to labstack"
         )
         return
@@ -62,13 +62,13 @@ async def labstack(event):
         t_response = subprocess.check_output(command_to_exec, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as exc:
         logger.info("Status : FAIL", exc.returncode, exc.output)
-        await event.edit(exc.output.decode("UTF-8"))
+        await friday.tr_engine(event, exc.output.decode("UTF-8"))
         return
     else:
         logger.info(t_response)
         t_response_arry = "https://up.labstack.com/api/v1/links/{}/receive".format(
             r2json["code"]
         )
-    await event.edit(
+    await friday.tr_engine(event, 
         t_response_arry + "\nMax Days:" + str(max_days), link_preview=False
     )

@@ -10,7 +10,7 @@ from fridaybot import CMD_HELP
 async def quote_search(event):
     if event.fwd_from:
         return
-    await event.edit("Processing...")
+    await friday.tr_engine(event, "Processing...")
     search_string = event.pattern_match.group(1)
     input_url = "https://bots.shrimadhavuk.me/Telegram/GoodReadsQuotesBot/?q={}".format(
         search_string
@@ -27,9 +27,9 @@ async def quote_search(event):
     else:
         result = None
     if result:
-        await event.edit(result.replace("<code>", "`").replace("</code>", "`"))
+        await friday.tr_engine(event, result.replace("<code>", "`").replace("</code>", "`"))
     else:
-        await event.edit("Zero results found")
+        await friday.tr_engine(event, "Zero results found")
 
 
 CMD_HELP.update(

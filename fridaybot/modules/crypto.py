@@ -34,7 +34,7 @@ async def _(event):
     k = curre
     q = str(t.get(curre))
 
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Conversion complete</b></u> \n<b>cryptocurrency</b>:-  <code>{currency}</code> \n<b>cryptocurrency value in </b> <code>{k}</code> <b> is :- </b> <code> {q}</code>",
         parse_mode="HTML",
     )

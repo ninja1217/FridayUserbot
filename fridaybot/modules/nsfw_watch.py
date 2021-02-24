@@ -34,30 +34,30 @@ MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 @friday.on(friday_on_cmd(pattern="anw$"))
 async def nsfw_watch(event):
     if not event.is_group:
-        await event.edit("You Can Only Nsfw Watch in Groups.")
+        await friday.tr_engine(event, "You Can Only Nsfw Watch in Groups.")
         return
     if not await is_admin(event, bot.uid): 
-        await event.edit("`You Should Be Admin To Do This!`")
+        await friday.tr_engine(event, "`You Should Be Admin To Do This!`")
         return
     if is_nsfwatch_indb(str(event.chat_id)):
-        await event.edit("`This Chat Has Already Enabled Nsfw Watch.`")
+        await friday.tr_engine(event, "`This Chat Has Already Enabled Nsfw Watch.`")
         return
     add_nsfwatch(str(event.chat_id))
-    await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Logged in Logging Group**")
+    await friday.tr_engine(event, f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Logged in Logging Group**")
 
 @friday.on(friday_on_cmd(pattern="rmnw$"))
 async def disable_nsfw(event):
     if not event.is_group:
-        await event.edit("You Can Only Disable Nsfw Mode in Groups.")
+        await friday.tr_engine(event, "You Can Only Disable Nsfw Mode in Groups.")
         return
     if not await is_admin(event, bot.uid): 
-        await event.edit("`You Should Be Admin To Do This!`")
+        await friday.tr_engine(event, "`You Should Be Admin To Do This!`")
         return
     if not is_nsfwatch_indb(str(event.chat_id)):
-        await event.edit("This Chat Has Not Enabled Nsfw Watch.")
+        await friday.tr_engine(event, "This Chat Has Not Enabled Nsfw Watch.")
         return
     rmnsfwatch(str(event.chat_id))
-    await event.edit(f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Nsfw Watch**")
+    await friday.tr_engine(event, f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Nsfw Watch**")
     
 @bot.on(events.NewMessage())        
 async def ws(event):
@@ -92,7 +92,7 @@ async def ws(event):
         else:
             ujwal = wstark.id
         try:
-            await borg.send_message(Config.PRIVATE_GROUP_ID, f"**#NSFW_WATCH** \n**Chat :** `{hehe}` \n**Nsfw Sender - User / Bot :** `{ujwal}` \n**Chat Title:** `{ctitle}`")  
+            await friday.send_message(Config.PRIVATE_GROUP_ID, f"**#NSFW_WATCH** \n**Chat :** `{hehe}` \n**Nsfw Sender - User / Bot :** `{ujwal}` \n**Chat Title:** `{ctitle}`")  
             return
         except:
             return

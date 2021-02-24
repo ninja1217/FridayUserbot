@@ -29,8 +29,8 @@ async def _(event):
             a = json.dumps(current_date_detail_arraays, sort_keys=True, indent=4)
         else:
             a = response_content["error"]
-        await event.edit(str(a))
+        await friday.tr_engine(event, str(a))
     else:
-        await event.edit("SYNTAX: .calendar YYYY-MM-DD")
+        await friday.tr_engine(event, "SYNTAX: .calendar YYYY-MM-DD")
     end = datetime.now()
     (end - start).seconds

@@ -32,24 +32,24 @@ async def hmm(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    await event.edit("hmm... Hiding Text Inside Image...")
+    await friday.tr_engine(event, "hmm... Hiding Text Inside Image...")
     sed = await event.get_reply_message()
     if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
+        img = await friday.download_media(sed.media, sedpath)
     elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
+        img = await friday.download_media(sed.media, sedpath)
     else:
-        await event.edit("Reply To Image")
+        await friday.tr_engine(event, "Reply To Image")
         return
     text = event.pattern_match.group(1)
     if not text:
-        await event.edit("No input found!  --__--")
+        await friday.tr_engine(event, "No input found!  --__--")
         return
     crypto_steganography = CryptoSteganography("hell")
     crypto_steganography.hide(img, "./fridaydevs/stegano.png", text)
     file_name = "stegano.png"
     ok = "./fridaydevs/" + file_name
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         ok,
         force_document=True,
@@ -68,19 +68,19 @@ async def hmm(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    await event.edit("hmm... Searching for Text Inside The Image...")
+    await friday.tr_engine(event, "hmm... Searching for Text Inside The Image...")
     sed = await event.get_reply_message()
     if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
+        img = await friday.download_media(sed.media, sedpath)
     elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
+        img = await friday.download_media(sed.media, sedpath)
     else:
-        await event.edit("Reply To Image")
+        await friday.tr_engine(event, "Reply To Image")
         return
     crypto_steganography = CryptoSteganography("hell")
     secret = crypto_steganography.retrieve(img)
 
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Decrypted Text Successfully</b></u> \n<b>text</b>:-  <code>{secret}</code>",
         parse_mode="HTML",
     )

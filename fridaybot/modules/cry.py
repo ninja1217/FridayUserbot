@@ -16,7 +16,7 @@ async def _(event):
 
     animation_ttl = range(0, 103)
 
-    await event.edit("crying")
+    await friday.tr_engine(event, "crying")
 
     animation_chars = [
         ";__",
@@ -60,4 +60,4 @@ async def _(event):
     for i in animation_ttl:
 
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 35])
+        await friday.tr_engine(event, animation_chars[i % 35])

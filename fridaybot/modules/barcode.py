@@ -30,7 +30,7 @@ async def _(event):
         previous_message = await event.get_reply_message()
         reply_msg_id = previous_message.id
         if previous_message.media:
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await friday.download_media(
                 previous_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
             )
@@ -49,7 +49,7 @@ async def _(event):
     try:
         bar_code_mode_f = barcode.get(bar_code_type, message, writer=ImageWriter())
         filename = bar_code_mode_f.save(bar_code_type)
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             filename,
             caption=message,

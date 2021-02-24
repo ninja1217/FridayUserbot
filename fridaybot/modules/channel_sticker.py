@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -28,29 +28,29 @@ lulstark = [".", ",", "!", "'"]
 async def _m(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     id_s = event.chat_id
     lmao = await event.get_reply_message()
     if event.is_group:
-        await event.edit("`No, LoL You Can't Set Channel Stickers In Groups, lol`")
+        await friday.tr_engine(event, "`No, LoL You Can't Set Channel Stickers In Groups, lol`")
         return
     if event.is_private:
-        await event.edit(
+        await friday.tr_engine(event, 
             "`No, LoL You Can't Set Channel Stickers In Private Chats, lol`"
         )
         return
     if not lmao.sticker:
-        await event.edit("`Only Sticker Allowded.`")
+        await friday.tr_engine(event, "`Only Sticker Allowded.`")
         return
     if is_data_indb(id_s):
-        await event.edit(
+        await friday.tr_engine(event, 
             "`This Channel Sticker Data Is Already In Db, Remove First To Update it.`"
         )
         return
     if not is_data_indb(id_s):
         bot_api_file_id = pack_bot_file_id(lmao.media)
         add_new_data_in_db(id_s, bot_api_file_id)
-        await event.edit(
+        await friday.tr_engine(event, 
             "`This Sticker Has Been Set As Channel Sticker For This Channel`"
         )
 
@@ -59,27 +59,27 @@ async def _m(event):
 async def _m(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     id_s = event.chat_id
     if is_data_indb(id_s):
         remove_datas(id_s)
-        await event.edit("`Done, I have Removed This Channel From DB`")
+        await friday.tr_engine(event, "`Done, I have Removed This Channel From DB`")
     elif not is_data_indb(id_s):
-        await event.edit("`You Need To Set Channel Sticker To Remove It`")
+        await friday.tr_engine(event, "`You Need To Set Channel Sticker To Remove It`")
 
 
 @friday.on(admin_cmd(pattern="ccs$"))
 async def _m(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     id_s = event.chat_id
     if is_data_indb(id_s):
-        await event.edit(
+        await friday.tr_engine(event, 
             f"**Yes, Channel Sticker Has Been Set. Sticker ID :** `{is_data_indb(id_s)}`"
         )
     elif not is_data_indb(id_s):
-        await event.edit("`No Channel Sticker Set For This Channel.`")
+        await friday.tr_engine(event, "`No Channel Sticker Set For This Channel.`")
 
 
 @bot.on(events.NewMessage)
@@ -92,9 +92,9 @@ async def lul(event):
         if event.text.startswith(tuple(lulstark)):
             return
         try:
-            await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
+            await friday.send_file(event.chat_id, is_data_indb(event.chat_id))
         except:
-            await borg.send_message(
+            await friday.send_message(
                 Config.PRIVATE_GROUP_ID,
                 f"Failed, To Send Sticker in {lsb}, Probably Due To No Access, Or Channel Not Found.",
             )

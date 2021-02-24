@@ -29,7 +29,7 @@ async def _(event):
     if event.reply_to_msg_id:
         reply_msg_id = event.reply_to_msg_id
     try:
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             pronounciation,
             caption=f"Pronounciation of __{input_str}__",

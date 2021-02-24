@@ -697,7 +697,7 @@ async def _(event):
 """
 
     Y = X.replace("🌺",hitleR)
-    await event.edit(Y)
+    await friday.tr_engine(event, Y)
 
 
 
@@ -712,24 +712,24 @@ async def _(event):
             input_str = input_str.lower()
         if r % 2 == 1:
             if input_str == "heads":
-                await event.edit("The coin landed on: **Heads**.\nYou were correct.")
+                await friday.tr_engine(event, "The coin landed on: **Heads**.\nYou were correct.")
             elif input_str == "tails":
-                await event.edit(
+                await friday.tr_engine(event, 
                     "The coin landed on: **Heads**.\nYou weren't correct, try again ..."
                 )
             else:
-                await event.edit("The coin landed on: **Heads**.")
+                await friday.tr_engine(event, "The coin landed on: **Heads**.")
         elif r % 2 == 0:
             if input_str == "tails":
-                await event.edit("The coin landed on: **Tails**.\nYou were correct.")
+                await friday.tr_engine(event, "The coin landed on: **Tails**.\nYou were correct.")
             elif input_str == "heads":
-                await event.edit(
+                await friday.tr_engine(event, 
                     "The coin landed on: **Tails**.\nYou weren't correct, try again ..."
                 )
             else:
-                await event.edit("The coin landed on: **Tails**.")
+                await friday.tr_engine(event, "The coin landed on: **Tails**.")
         else:
-            await event.edit("Gimme another coin, this one fake AF !!")
+            await friday.tr_engine(event, "Gimme another coin, this one fake AF !!")
 
 
 @register(pattern="^.slap(?: |$)(.*)", outgoing=True)
@@ -747,10 +747,10 @@ async def who(event):
             message_id_to_reply = None
 
         try:
-            await event.edit(caption)
+            await friday.tr_engine(event, caption)
 
         except:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "`Can't slap this person, need to fetch some sticks and stones !!`"
             )
 
@@ -782,7 +782,7 @@ async def get_user(event):
             replied_user = await event.client(GetFullUserRequest(user_object.id))
 
         except (TypeError, ValueError):
-            await event.edit("`I don't slap aliens, they ugly AF !!`")
+            await friday.tr_engine(event, "`I don't slap aliens, they ugly AF !!`")
             return None
 
     return replied_user
@@ -843,21 +843,21 @@ async def fun(e):
         t = ";__;"
         for j in range(10):
             t = t[:-1] + "_;"
-            await e.edit(t)
+            await friday.tr_engine(event, t)
 
 
 @register(outgoing=True, pattern="^.cry$")
 async def cry(e):
     """ y u du dis, i cry everytime !! """
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(random.choice(CRI))
+        await friday.tr_engine(event, random.choice(CRI))
 
 
 @register(outgoing=True, pattern="^.insult$")
 async def insult(e):
     """ I make you cry !! """
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(random.choice(INSULT_STRINGS))
+        await friday.tr_engine(event, random.choice(INSULT_STRINGS))
 
 
 @register(outgoing=True, pattern="^.cp(?: |$)(.*)")
@@ -925,7 +925,7 @@ async def vapor(vpr):
 @register(outgoing=True, pattern="^.repo$")
 async def source(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(
+        await friday.tr_engine(event, 
             "Hello , User I Am Using [FridayUserbot](https://github.com/Starkgang/FridayUserbot) ! Worth A Try 😌"
         )
 
@@ -1159,13 +1159,13 @@ async def Oof(e):
         t = "Oof"
         for j in range(15):
             t = t[:-1] + "of"
-            await e.edit(t)
+            await friday.tr_engine(event, t)
 
 
 @register(outgoing=True, pattern="^.10iq$")
 async def iqless(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("♿")
+        await friday.tr_engine(event, "♿")
 
 
 @register(outgoing=True, pattern="^.moon$")
@@ -1176,7 +1176,7 @@ async def _(event):
         deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
         for _ in range(32):
             await asyncio.sleep(0.1)
-            await event.edit("".join(deq))
+            await friday.tr_engine(event, "".join(deq))
             deq.rotate(1)
 
 
@@ -1188,7 +1188,7 @@ async def _(event):
         deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
         for _ in range(32):
             await asyncio.sleep(0.1)
-            await event.edit("".join(deq))
+            await friday.tr_engine(event, "".join(deq))
             deq.rotate(1)
 
 
@@ -1284,7 +1284,7 @@ async def payf(e):
             paytext * 1,
             paytext * 1,
         )
-        await e.edit(pay)
+        await friday.tr_engine(event, pay)
 
 
 @register(
@@ -1384,14 +1384,14 @@ async def download_video(v_url):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit("╔┓┏╦━╦┓╔┓╔━━╗\n║┗┛║┗╣┃║┃║X X  ║\n║┏┓║┏╣┗╣┗╣╰╯║\n╚┛┗╩━╩━╩━╩━━╝")
+    await friday.tr_engine(event, "╔┓┏╦━╦┓╔┓╔━━╗\n║┗┛║┗╣┃║┃║X X  ║\n║┏┓║┏╣┗╣┗╣╰╯║\n╚┛┗╩━╩━╩━╩━━╝")
 
 
 @friday.on(friday_on_cmd(pattern=r"plus$"))
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "╭━━━━━━━━━━━━━╮\n┃╱╱╱╱╱╱╱╱┏┓╱╱╱┃\n┃╱╱╱┏┓╱╱┏╯┃╱╱╱┃\n┃╱╱┏┛┗┓╱┗┓┃╱╱╱┃\n┃╱╱┗┓┏┛╱╱┃┃╱╱╱┃\n┃╱╱╱┗┛╱╱╱┃┃╱╱╱┃\n┃╱╱╱╱╱╱╱╱┗┛╱╱╱┃\n╰━━━━━━━━━━━━━╯"
     )
 
@@ -1400,7 +1400,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "┏┓┏┓╭━━┓╭━━╮▕▔▔▏\n┃┃┃┃┃┏━┛┃╭━┛▕┈┈▏\n┃╰╯┃┃┗━┓┃╰━╮▕┈┈▏\n╰━╮┃┃┏━┛╰━╮┃┈╲╱┈\n┏━╯┃┃┗━┓┏━╯┃┈╭╮┈\n╰━━╯╰━━┛╰━━╯┈╰╯┈"
     )
 
@@ -1409,7 +1409,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "▂▂╱▔▔▔▔▔▔▔▔▔▔▔▔╲\n╲▂┈╭╮┈┈╭━━╮╭╮┈┈▕\n┈┈▏┃┃┈┈┃╭╮┃┃┃┈┈▕\n┈┈▏┃╰━╮┃╰╯┃┃╰━╮▕\n┈┈▏╰━━╯╰━━╯╰━━╯▕\n┈┈╲▂▂▂▂▂▂▂▂▂▂▂▂╱"
     )
 
@@ -1418,7 +1418,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "┈┈┈╲┈┈┈┈╱┈┈┈┈┈┈┈\n┈┈┈╱▔▔▔▔╲┈┈┈┈┈┈┈\n┈┈┃┈▇┈┈▇┈┃┈┈┈┈┈┈\n╭╮┣━━━━━━┫╭╮┈┈┈┈\n┃┃┃┈┈┈┈┈┈┃┃┃┈┈┈┈\n╰╯┃┈┈┈┈┈┈┃╰╯┈┈┈┈\n┈┈╰┓┏━━┓┏╯┈┈┈┈┈┈\n┈┈┈╰╯┈┈╰╯┈┈┈┈┈┈┈"
     )
 
@@ -1427,7 +1427,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "┈┈╱▔▔▔▔▔╲┈┈┈HM┈HM\n┈╱┈┈╱▔╲╲╲▏┈┈┈HMMM\n╱┈┈╱━╱▔▔▔▔▔╲━╮┈┈\n▏┈▕┃▕╱▔╲╱▔╲▕╮┃┈┈\n▏┈▕╰━▏▊▕▕▋▕▕━╯┈┈\n╲┈┈╲╱▔╭╮▔▔┳╲╲┈┈┈\n┈╲┈┈▏╭━━━━╯▕▕┈┈┈\n┈┈╲┈╲▂▂▂▂▂▂╱╱┈┈┈\n┈┈┈┈▏┊┈┈┈┈┊┈┈┈╲┈\n┈┈┈▏┊┈┈┈┈┊▕╲┈┈╲\n┈╱▔╲▏┊┈┈┈┈┊▕╱▔╲▕\n┈▏┈┈┈╰┈┈┈┈╯┈┈┈▕▕\n┈╲┈┈┈╲┈┈┈┈╱┈┈┈╱┈╲\n┈┈╲┈┈▕▔▔▔▔▏┈┈╱╲╲╲▏\n┈╱▔┈┈▕┈┈┈┈▏┈┈▔╲▔▔\n┈╲▂▂▂╱┈┈┈┈╲▂▂▂╱┈"
     )
 
@@ -1438,7 +1438,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "¸.•°*”˜˜”*°•.¸☆ ★ ☆¸.•°*”˜˜”*°\n╔╗╔╦══╦═╦═╦╗╔╗ ★ ★ \n║╚╝║══║═║═║╚╝║ ☆¸.•° \n║╔╗║╔╗║╔╣╔╩╗╔╝ ★\n╚╝╚╩╝╚╩╝╚╝═╚╝★Birthday!★"
     )
 
@@ -1447,7 +1447,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "┏┓┏┓┏┓┏━━━┓┏━━━┓\n┃┃┃┃┃┃┗┓╱┏┛┃╱┏━┛\n┃┗┛┗┛┃┈┃╱┃┈┃╱┗┓\n┃╱╱╱╱┃┈┃╱┃┈┃╱┏┛\n┗━━━━┛◯┗━┛◯┗━┛◯"
     )
 
@@ -1456,7 +1456,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "┏┓┈╭━━╮╭━━╮╭━━╮\n┃┃┈┃┃┃┃┃╭╮┃┃╭╮┃\n┃┗┓┃┃┃┃┃┏┓┃┃╰╯┃\n┗━┛┗┻┻┛┗┛┗┛╰━━╯"
     )
 
@@ -1482,7 +1482,7 @@ async def hi(event):
  ╰╯╰╯╰┻━━┻╯╰╯╰┻┻╯╰┻━╮┃
  ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
  ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯"""
-    await event.edit(X)
+    await friday.tr_engine(event, X)
 
 
 
@@ -1490,7 +1490,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit(
+    await friday.tr_engine(event, 
         "███╗░░██╗░█████╗░ \n████╗░██║██╔══██╗ \n██╔██╗██║██║░░██║ \n██║╚████║██║░░██║ \n██║░╚███║╚█████╔╝ \n╚═╝░░╚══╝░╚════╝░ "
     )
 

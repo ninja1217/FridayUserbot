@@ -110,7 +110,7 @@ async def _(event):
     shutil.make_archive(nme, "zip", "./subs/")
     caption = """<b>Subtitles By Friday.
 Get Your Friday From</b> @FridayOT."""
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

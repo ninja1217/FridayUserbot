@@ -65,7 +65,7 @@ async def _(event):
 Get Your Friday From</b></u> @FridayOT.
 """
       await event.delete()
-      await borg.send_message(
+      await friday.send_message(
         event.chat_id,
         message,
         parse_mode="HTML",

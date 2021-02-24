@@ -47,7 +47,7 @@ if 1 == 1:
 
                 photo = await event.client.download_profile_photo(chat)
 
-                await borg.send_file(event.chat_id, photo)
+                await friday.send_file(event.chat_id, photo)
 
         else:
 
@@ -57,13 +57,13 @@ if 1 == 1:
 
                 if id <= 0:
 
-                    await event.edit("`ID number you entered is invalid`")
+                    await friday.tr_engine(event, "`ID number you entered is invalid`")
 
                     return
 
             except:
 
-                await event.edit("`Are you Comedy Me ?`")
+                await friday.tr_engine(event, "`Are you Comedy Me ?`")
 
                 return
 
@@ -71,11 +71,11 @@ if 1 == 1:
 
                 send_photos = await event.client.download_media(photos[id - 1])
 
-                await borg.send_file(event.chat_id, send_photos)
+                await friday.send_file(event.chat_id, send_photos)
 
             else:
 
-                await event.edit("`No photo found of that Nigga , now u Die`")
+                await friday.tr_engine(event, "`No photo found of that Nigga , now u Die`")
 
                 return
 

@@ -38,17 +38,17 @@ async def _(event):
         lmao = input_str.upper()
         company = get_symbol(lmao)
         if company == None:
-            await event.edit(
+            await friday.tr_engine(event, 
                 f"<b><u>Stock Information Gathered Successfully</b></u> \n\n<b>Live Price of <code>{lmao}</code> is:-  $</b> <code>{a}</code> USD",
                 parse_mode="HTML",
             )
         else:
-            await event.edit(
+            await friday.tr_engine(event, 
                 f"<b><u>Stock Information Gathered Successfully</b></u> \n\n<b>Live Price of <code>{company}</code> is:-  $</b> <code>{a}</code> USD",
                 parse_mode="HTML",
             )
     except AssertionError:
-        await event.edit("There Is No Such Ticker.")
+        await friday.tr_engine(event, "There Is No Such Ticker.")
 
 
 CMD_HELP.update(

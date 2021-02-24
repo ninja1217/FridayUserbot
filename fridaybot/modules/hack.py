@@ -17,7 +17,7 @@ async def _(event):
         return
     animation_interval = 2
     animation_ttl = range(0, 11)
-    await event.edit("Starting Servers")
+    await friday.tr_engine(event, "Starting Servers")
     animation_chars = [
                 "`Connecting To T-800 At 149.154.167.51 - IPV4 - TELEGRAM // DC-2`",
                 "`Hacking... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `\n\n\n  TERMINAL:\nDownloading Bruteforce-Telegram-0.1.tar.gz (9.3 kB)",
@@ -32,7 +32,7 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 11])
+        await friday.tr_engine(event, animation_chars[i % 11])
 
 
 CMD_HELP.update(

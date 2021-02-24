@@ -29,7 +29,7 @@ async def _(event):
         country_time_zone = int(response_api["timezone"])
         sun_rise_time = int(response_api["sys"]["sunrise"]) + country_time_zone
         sun_set_time = int(response_api["sys"]["sunset"]) + country_time_zone
-        await event.edit(
+        await friday.tr_engine(event, 
             """{}
 **Temperature**: {}°С
     __minimium__: {}°С
@@ -54,7 +54,7 @@ async def _(event):
             )
         )
     else:
-        await event.edit(response_api["message"])
+        await friday.tr_engine(event, response_api["message"])
 
 
 @friday.on(friday_on_cmd(pattern="wttr (.*)"))
@@ -70,7 +70,7 @@ async def _(event):
         response_api = await response_api_zero.read()
         with io.BytesIO(response_api) as out_file:
             await event.reply(file=out_file)
-    await event.edit(input_str)
+    await friday.tr_engine(event, input_str)
 
 
 CMD_HELP.update(

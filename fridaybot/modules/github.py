@@ -25,7 +25,7 @@ async def _(event):
         location = b["location"]
         bio = b["bio"]
         created_at = b["created_at"]
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             caption="""Name: [{}]({})
 Type: {}

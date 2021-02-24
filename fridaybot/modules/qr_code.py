@@ -28,7 +28,7 @@ async def _(event):
     start = datetime.now()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    downloaded_file_name = await borg.download_media(
+    downloaded_file_name = await friday.download_media(
         await event.get_reply_message(),
         Config.TMP_DOWNLOAD_DIRECTORY,
         progress_callback=progress,
@@ -56,17 +56,17 @@ async def _(event):
     if not t_response:
         logger.info(e_response)
         logger.info(t_response)
-        await event.edit("@oo0pps .. something wrongings. Failed to decode QRCode")
+        await friday.tr_engine(event, "@oo0pps .. something wrongings. Failed to decode QRCode")
         return
     soup = BeautifulSoup(t_response, "html.parser")
     qr_contents = soup.find_all("pre")[0].text
     end = datetime.now()
     ms = (end - start).seconds
-    await event.edit(
+    await friday.tr_engine(event, 
         "Obtained QRCode contents in {} seconds.\n{}".format(ms, qr_contents)
     )
     await asyncio.sleep(5)
-    await event.edit(qr_contents)
+    await friday.tr_engine(event, qr_contents)
 
 
 @friday.on(friday_on_cmd(pattern="makeqr ?(.*)"))
@@ -83,7 +83,7 @@ async def _(event):
         previous_message = await event.get_reply_message()
         reply_msg_id = previous_message.id
         if previous_message.media:
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await friday.download_media(
                 previous_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 progress_callback=progress,
@@ -109,7 +109,7 @@ async def _(event):
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
     img.save("img_file.webp", "PNG")
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         "img_file.webp",
         caption=message,
@@ -119,7 +119,7 @@ async def _(event):
     os.remove("img_file.webp")
     end = datetime.now()
     ms = (end - start).seconds
-    await event.edit("Created QRCode in {} seconds".format(ms))
+    await friday.tr_engine(event, "Created QRCode in {} seconds".format(ms))
     await asyncio.sleep(5)
     await event.delete()
 

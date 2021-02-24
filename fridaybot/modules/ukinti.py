@@ -32,7 +32,7 @@ async def _(event):
     else:
         if event.is_private:
             return False
-        await event.edit("Searching Participant Lists.")
+        await friday.tr_engine(event, "Searching Participant Lists.")
         p = 0
         async for i in borg.iter_participants(
             event.chat_id, filter=ChannelParticipantsKicked, aggressive=True
@@ -46,10 +46,10 @@ async def _(event):
                 logger.warn("sleeping for {} seconds".format(ex.seconds))
                 sleep(ex.seconds)
             except Exception as ex:
-                await event.edit(str(ex))
+                await friday.tr_engine(event, str(ex))
             else:
                 p += 1
-        await event.edit("{}: {} unbanned".format(event.chat_id, p))
+        await friday.tr_engine(event, "{}: {} unbanned".format(event.chat_id, p))
 
 
 @friday.on(friday_on_cmd(pattern="ikuck ?(.*)"))
@@ -62,7 +62,7 @@ async def _(event):
     if input_str:
         chat = await event.get_chat()
         if not (chat.admin_rights or chat.creator):
-            await event.edit("`You aren't an admin here!`")
+            await friday.tr_engine(event, "`You aren't an admin here!`")
             return False
     p = 0
     b = 0
@@ -76,7 +76,7 @@ async def _(event):
     o = 0
     q = 0
     r = 0
-    await event.edit("Searching Participant Lists.")
+    await friday.tr_engine(event, "Searching Participant Lists.")
     async for i in borg.iter_participants(event.chat_id):
         p = p + 1
         #
@@ -88,7 +88,7 @@ async def _(event):
             if "y" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -98,7 +98,7 @@ async def _(event):
             if "m" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -108,7 +108,7 @@ async def _(event):
             if "w" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -118,7 +118,7 @@ async def _(event):
             if "o" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -128,7 +128,7 @@ async def _(event):
             if "q" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -138,7 +138,7 @@ async def _(event):
             if "r" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -148,7 +148,7 @@ async def _(event):
             if "b" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                     break
                 else:
@@ -158,7 +158,7 @@ async def _(event):
             if "d" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await friday.tr_engine(event, "I need admin priveleges to perform this action!")
                     e.append(str(e))
                 else:
                     c = c + 1
@@ -175,9 +175,9 @@ UserStatusOnline: {}
 UserStatusRecently: {}
 Bots: {}
 None: {}"""
-        await event.edit(required_string.format(c, p, d, y, m, w, o, q, r, b, n))
+        await friday.tr_engine(event, required_string.format(c, p, d, y, m, w, o, q, r, b, n))
         await asyncio.sleep(5)
-    await event.edit(
+    await friday.tr_engine(event, 
         """Total: {} users
 Deleted Accounts: {}
 UserStatusEmpty: {}

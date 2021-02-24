@@ -28,4 +28,4 @@ async def _(event):
         pass
     else:
         bm = TextBlob(input_str)
-        await event.edit(bm)
+        await friday.tr_engine(event, bm)

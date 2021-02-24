@@ -30,12 +30,12 @@ async def _(event):
     stats = PasswordStats(input_str)
     sedbruh = stats.strength()
     if stats.strength() >= 0.2:
-        await event.edit(
+        await friday.tr_engine(event, 
             f"<b><u>Password Checked</b></u> \n<b>Password :</b> <code>{input_str}</code> \n<b>Strength :</b> <code>{sedbruh}</code> \n<b>Result :</b> <code>Good Password</code>",
             parse_mode="HTML",
         )
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             f"<b><u>Password Checked</b></u> \n<b>Password :</b> <code>{input_str}</code> \n<b>Strength :</b> <code>{sedbruh}</code> \n<b>Result :</b> <code>Bad Password</code>",
             parse_mode="HTML",
         )
@@ -48,7 +48,7 @@ async def hi(event):
     okbabe = secrets.token_urlsafe(16)
     stats = PasswordStats(okbabe)
     sedbruh = stats.strength()
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b>Password</b> : <code>{okbabe}</code> \n<b>Strength :</b> <code>{sedbruh}</code>",
         parse_mode="HTML",
     )

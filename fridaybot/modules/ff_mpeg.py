@@ -22,7 +22,7 @@ async def ff_mpeg_trim_cmd(event):
             reply_message = await event.get_reply_message()
             try:
                 c_time = time.time()
-                downloaded_file_name = await borg.download_media(
+                downloaded_file_name = await friday.download_media(
                     reply_message,
                     FF_MPEG_DOWN_LOAD_MEDIA_PATH,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -30,17 +30,17 @@ async def ff_mpeg_trim_cmd(event):
                     ),
                 )
             except Exception as e:  # pylint:disable=C0103,W0703
-                await event.edit(str(e))
+                await friday.tr_engine(event, str(e))
             else:
                 end = datetime.now()
                 ms = (end - start).seconds
-                await event.edit(
+                await friday.tr_engine(event, 
                     "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
                 )
         else:
-            await event.edit("Reply to a Telegram media file")
+            await friday.tr_engine(event, "Reply to a Telegram media file")
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             f"a media file already exists in path. Please remove the media and try again!\n`.exec rm {FF_MPEG_DOWN_LOAD_MEDIA_PATH}`"
         )
 
@@ -50,7 +50,7 @@ async def ff_mpeg_trim_cmd(event):
     if event.fwd_from:
         return
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
-        await event.edit(
+        await friday.tr_engine(event, 
             f"a media file needs to be downloaded, and saved to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`"
         )
         return
@@ -70,7 +70,7 @@ async def ff_mpeg_trim_cmd(event):
         logger.info(o)
         try:
             c_time = time.time()
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 o,
                 caption=" ".join(cmt[1:]),
@@ -94,7 +94,7 @@ async def ff_mpeg_trim_cmd(event):
         logger.info(o)
         try:
             c_time = time.time()
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 o,
                 caption=" ".join(cmt[1:]),
@@ -110,11 +110,11 @@ async def ff_mpeg_trim_cmd(event):
         except Exception as e:
             logger.info(str(e))
     else:
-        await event.edit("RTFM")
+        await friday.tr_engine(event, "RTFM")
         return
     end = datetime.now()
     ms = (end - start).seconds
-    await event.edit(f"Completed Process in {ms} seconds")
+    await friday.tr_engine(event, f"Completed Process in {ms} seconds")
 
 
 async def take_screen_shot(video_file, output_directory, ttl):

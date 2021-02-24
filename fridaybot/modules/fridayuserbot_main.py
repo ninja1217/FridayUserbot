@@ -98,7 +98,7 @@ async def fridayalive(alive):
                   "➥ **Check Stats By Doing** `.stat`. \n\n"
                   "[🇮🇳 Deploy FridayUserbot 🇮🇳](https://telegra.ph/FRIDAY-06-15)")
     
-    await borg.send_message(
+    await friday.send_message(
         alive.chat_id,
         pm_caption,
         reply_to=alive.message.reply_to_msg_id,
@@ -117,9 +117,9 @@ async def _(event):
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
-            await event.edit(f"Here is some help for the {CMD_HELP[args]}")
+            await friday.tr_engine(event, f"Here is some help for the {CMD_HELP[args]}")
         else:
-            await event.edit(
+            await friday.tr_engine(event, 
                 f"Help string for {args} not found! Type `.help` to see valid module names."
             )
     else:
@@ -127,7 +127,7 @@ async def _(event):
         for i in CMD_HELP.values():
             string += f"`{str(i[0])}`, "
         string = string[:-2]
-        await event.edit(
+        await friday.tr_engine(event, 
             "Please specify which module you want help for!\n\n" f"{string}"
         )
         
@@ -147,7 +147,7 @@ async def _(event):
     uptime = get_readable_time((time.time() - Lastupdate))
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await starkislub.edit(
+    await friday.tr_engine(event, 
         f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n➲ `{round(ms)}ms` \n➲ `{uptime}` \n➲ {rip} \n➲ @{bothmm.username}"
     )
 
@@ -167,18 +167,18 @@ async def install(event):
                 path1 = Path(downloaded_file_name)
                 shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
-                await event.edit(
+                await friday.tr_engine(event, 
                     "Friday Has Installed `{}` Sucessfully.".format(
                         os.path.basename(downloaded_file_name)
                     )
                 )
             else:
                 os.remove(downloaded_file_name)
-                await event.edit(
+                await friday.tr_engine(event, 
                     "Errors! This plugin is already installed/pre-installed."
                 )
         except Exception as e:  # pylint:disable=C0103,W0703
-            await event.edit(
+            await friday.tr_engine(event, 
                 f"Error While Installing This Plugin, Please Make Sure That its py Extension. \n**ERROR :** {e}"
             )
             os.remove(downloaded_file_name)
@@ -204,7 +204,7 @@ async def _(event):
         return
     lul = event.pattern_match.group(1)
     yesm, nope, total_p = await get_all_modules(event, borg, lul)
-    await event.edit(f"Installed {yesm} PLugins. Failed To Install {nope} Plugins And There Were Total {total_p} Plugins")
+    await friday.tr_engine(event, f"Installed {yesm} PLugins. Failed To Install {nope} Plugins And There Were Total {total_p} Plugins")
     
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
@@ -222,7 +222,7 @@ async def gen_chlog(repo, diff):
 async def print_changelogs(event, ac_br, changelog):
     changelog_str = f"**Updates available in {ac_br} branch!**\n\n{changelog}"
     if len(changelog_str) > 4096:
-        await event.edit("**Changelog is too big, sending as a file.**")
+        await friday.tr_engine(event, "**Changelog is too big, sending as a file.**")
         file = open("output.txt", "w+")
         file.write(changelog_str)
         file.close()
@@ -257,7 +257,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         heroku_app = None
         heroku_applications = heroku.apps()
         if HEROKU_APP_NAME is None:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "**Please set up the** `HEROKU_APP_NAME` **variable"
                 " to be able to deploy your userbot.**"
             )
@@ -268,7 +268,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 heroku_app = app
                 break
         if heroku_app is None:
-            await event.edit(
+            await friday.tr_engine(event, 
                 f"{txt}\n" "**Invalid Heroku credentials for deploying userbot dyno.**"
             )
             return repo.__del__()
@@ -285,19 +285,19 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         try:
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except Exception as error:
-            await event.edit(f"{txt}\nHere is the error log:\n`{error}`")
+            await friday.tr_engine(event, f"{txt}\nHere is the error log:\n`{error}`")
             return repo.__del__()
         build = app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
-            await event.edit("**Build failed!**\nCancelled or there were some errors.`")
+            await friday.tr_engine(event, "**Build failed!**\nCancelled or there were some errors.`")
             await asyncio.sleep(5)
             return await event.delete()
         else:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "**Successfully updated!**\nBot is restarting, will be back up in a few seconds."
             )
     else:
-        await event.edit("**Please set up** `HEROKU_API_KEY` **variable.**")
+        await friday.tr_engine(event, "**Please set up** `HEROKU_API_KEY` **variable.**")
     return
 
 
@@ -307,7 +307,7 @@ async def update(event, repo, ups_rem, ac_br):
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
-    await event.edit(
+    await friday.tr_engine(event, 
         "**Soft Update Successful, Please Wait For Some Time To Get This Process Completed.**"
     )
     # Spin a new instance of bot
@@ -321,7 +321,7 @@ async def upstream(event):
     if event.fwd_from:
         return
     "For .update command, check if the bot is up to date, update if specified"
-    await event.edit("**Checking for updates, please wait...**")
+    await friday.tr_engine(event, "**Checking for updates, please wait...**")
     conf = event.pattern_match.group(1).strip()
     off_repo = UPSTREAM_REPO_URL
     force_update = False
@@ -330,14 +330,14 @@ async def upstream(event):
         txt += "some problems**\n`LOGTRACE:`\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"{txt}\n**Directory** `{error}` **was not found.**")
+        await friday.tr_engine(event, f"{txt}\n**Directory** `{error}` **was not found.**")
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n**Early failure!** `{error}`")
+        await friday.tr_engine(event, f"{txt}\n**Early failure!** `{error}`")
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
-            return await event.edit(
+            return await friday.tr_engine(event, 
                 f"**Unfortunately, the directory {error} "
                 "does not seem to be a git repository.\n"
                 "But we can fix that by force updating the userbot using **"
@@ -353,7 +353,7 @@ async def upstream(event):
 
     ac_br = repo.active_branch.name
     if ac_br != UPSTREAM_REPO_BRANCH:
-        await event.edit(
+        await friday.tr_engine(event, 
             f"**Looks like you are using your own custom branch: ({ac_br}). \n"
             "Please switch to** `master` **branch.**"
         )
@@ -369,14 +369,14 @@ async def upstream(event):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     """ - Special case for deploy - """
     if conf == "deploy":
-        await event.edit(
+        await friday.tr_engine(event, 
             "**Perfoming a Power Update, Please Wait. It Usually Takes 5 min.**"
         )
         await deploy(event, repo, ups_rem, ac_br, txt)
         return
 
     if changelog == "" and not force_update:
-        await event.edit(
+        await friday.tr_engine(event, 
             f"**Your userbot is up-to-date with `{UPSTREAM_REPO_BRANCH}`!**"
         )
         return repo.__del__()
@@ -389,12 +389,12 @@ async def upstream(event):
         )
 
     if force_update:
-        await event.edit(
+        await friday.tr_engine(event, 
             "**Force-syncing to latest stable userbot code, please wait...**"
         )
 
     if conf == "now":
-        await event.edit("**Perfoming a quick update, please wait...**")
+        await friday.tr_engine(event, "**Perfoming a quick update, please wait...**")
         await update(event, repo, ups_rem, ac_br)
     return
 
@@ -415,19 +415,19 @@ async def cmd_list(event):
                     string += "\n"
                 string += "\n"
             if len(string) > 4095:
-                await borg.send_message(event.chat_id, "Do .help cmd")
+                await friday.send_message(event.chat_id, "Do .help cmd")
                 await asyncio.sleep(5)
             else:
-                await event.edit(string)
+                await friday.tr_engine(event, string)
         elif input_str:
             if input_str in CMD_LIST:
                 string = "Commands found in {}:\n".format(input_str)
                 for i in CMD_LIST[input_str]:
                     string += "    " + i
                     string += "\n"
-                await event.edit(string)
+                await friday.tr_engine(event, string)
             else:
-                await event.edit(input_str + " is not a valid plugin!")
+                await friday.tr_engine(event, input_str + " is not a valid plugin!")
         else:
             help_string = """Friday Userbot Modules Are Listed Here !\n
 For More Help or Support Visit @FridayOT"""

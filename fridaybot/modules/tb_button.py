@@ -15,18 +15,18 @@ async def _(event):
     if event.fwd_from:
         return
     if Config.TG_BOT_TOKEN_BF_HER is None or tgbot is None:
-        await event.edit("need to set up a @BotFather bot for this module to work")
+        await friday.tr_engine(event, "need to set up a @BotFather bot for this module to work")
         return
 
     if Config.PRIVATE_GROUP_BOT_API_ID is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "need to have a `PRIVATE_GROUP_BOT_API_ID` for this module to work"
         )
         return
 
     reply_message = await event.get_reply_message()
     if reply_message is None:
-        await event.edit("reply to a message that I need to parse the magic on")
+        await friday.tr_engine(event, "reply to a message that I need to parse the magic on")
         return
 
     markdown_note = reply_message.text

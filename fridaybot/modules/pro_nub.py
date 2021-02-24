@@ -29,7 +29,7 @@ async def _(event):
 
     if input_str == "unoob":
 
-        await event.edit(input_str)
+        await friday.tr_engine(event, input_str)
 
         animation_chars = [
             "EvErYbOdY",
@@ -45,7 +45,7 @@ async def _(event):
 
         for i in animation_ttl:
 
-            await event.edit(animation_chars[i % 9])
+            await friday.tr_engine(event, animation_chars[i % 9])
             await asyncio.sleep(animation_interval)
 
 
@@ -64,7 +64,7 @@ async def _(event):
 
     if input_str == "menoob":
 
-        await event.edit(input_str)
+        await friday.tr_engine(event, input_str)
 
         animation_chars = [
             "EvErYbOdY",
@@ -80,7 +80,7 @@ async def _(event):
 
         for i in animation_ttl:
 
-            await event.edit(animation_chars[i % 9])
+            await friday.tr_engine(event, animation_chars[i % 9])
             await asyncio.sleep(animation_interval)
 
 
@@ -99,7 +99,7 @@ async def _(event):
 
     if input_str == "upro":
 
-        await event.edit(input_str)
+        await friday.tr_engine(event, input_str)
 
         animation_chars = [
             "EvErYbOdY",
@@ -114,7 +114,7 @@ async def _(event):
 
         for i in animation_ttl:
 
-            await event.edit(animation_chars[i % 8])
+            await friday.tr_engine(event, animation_chars[i % 8])
             await asyncio.sleep(animation_interval)
 
 
@@ -133,7 +133,7 @@ async def _(event):
 
     if input_str == "mepro":
 
-        await event.edit(input_str)
+        await friday.tr_engine(event, input_str)
 
         animation_chars = [
             "EvErYbOdY",
@@ -148,7 +148,7 @@ async def _(event):
 
         for i in animation_ttl:
 
-            await event.edit(animation_chars[i % 8])
+            await friday.tr_engine(event, animation_chars[i % 8])
             await asyncio.sleep(animation_interval)
 
 

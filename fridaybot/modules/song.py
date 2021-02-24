@@ -28,7 +28,7 @@ async def WooMai(netase):
             return
         await netase.edit("`Sending Your Music...`")
         await asyncio.sleep(3)
-        await bot.send_file(netase.chat_id, respond)
+        await friday.send_file(netase.chat_id, respond)
     await netase.client.delete_messages(conv.chat_id, [msg.id, response.id, respond.id])
     await netase.delete()
 

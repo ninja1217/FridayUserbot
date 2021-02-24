@@ -17,7 +17,7 @@ async def _(event):
         for i in a:
             await event.reply(i.original.action.message)
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             "You need administrative permissions in order to do this command"
         )
         await asyncio.sleep(3)

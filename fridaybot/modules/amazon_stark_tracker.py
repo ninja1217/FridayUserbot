@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +21,7 @@ from bs4 import BeautifulSoup
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
     url = event.text.split(" ", maxsplit=1)[1]
     try:
@@ -33,19 +33,19 @@ async def _(event):
         price = price[2:].split(',')
         price = round(float("".join(price)))
     except:
-        await event.edit("**Invalid Url !**")
+        await friday.tr_engine(event, "**Invalid Url !**")
         return
     if is_tracker_in_db(str(url)):
-        await event.edit("**Tracker Already Found In Db**")
+        await friday.tr_engine(event, "**Tracker Already Found In Db**")
         return
     add_new_tracker(url, price)
-    await event.edit(f"Product Name : {title} \nCurrent Price : {price} \n**Added To TrackerList**")
+    await friday.tr_engine(event, f"Product Name : {title} \nCurrent Price : {price} \n**Added To TrackerList**")
     
 @friday.on(friday_on_cmd(pattern="rmt"))
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     url = event.text.split(" ", maxsplit=1)[1]
     if url == "all":
         ws = get_all_urls()
@@ -54,12 +54,12 @@ async def _(event):
                 rm_tracker(str(i))
             except:
                 pass
-        await event.edit("Sucessfully Removed All Trackers")
+        await friday.tr_engine(event, "Sucessfully Removed All Trackers")
     if not is_tracker_in_db(str(url)):
-        await event.edit("**Tracker Not Found In Db**")
+        await friday.tr_engine(event, "**Tracker Not Found In Db**")
         return
     rm_tracker(str(url))
-    await event.edit(f"**Sucessfully Removed From TrackerList**")
+    await friday.tr_engine(event, f"**Sucessfully Removed From TrackerList**")
     
 async def track_amazon():
     headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
@@ -76,7 +76,7 @@ async def track_amazon():
         price = price[2:].split(',')
         price = round(float("".join(price)))
         if (int(price) > int(ujwal.budget)):
-            await borg.send_message(Config.PRIVATE_GROUP_ID, f"#Tracker - Price Reduced \nProduct Name : {title} \nCurrent price : {price}")
+            await friday.send_message(Config.PRIVATE_GROUP_ID, f"#Tracker - Price Reduced \nProduct Name : {title} \nCurrent price : {price}")
             rm_tracker(str(ujwal.amazon_url))
         else:
             pass

@@ -34,9 +34,9 @@ async def _(event):
     url = "https://superhero-search.p.rapidapi.com/"
     querystring = {"hero": input_str}
     if Config.SUPERHERO_API_KEY is None:
-      await event.edit("Need to get an API key from https://rapidapi.com/jakash1997/api/superhero-search\nModule stopping!")
+      await friday.tr_engine(event, "Need to get an API key from https://rapidapi.com/jakash1997/api/superhero-search\nModule stopping!")
       return
-    await event.edit("Processing Your Request.")
+    await friday.tr_engine(event, "Processing Your Request.")
     inputo = Config.SUPERHERO_API_KEY
 
     headers = {
@@ -126,7 +126,7 @@ async def _(event):
 <b>First Appearance:- </b>: <code>{firsT}</code>
 <b>alignment:- </b>: <code>{alignment}</code>
 """
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

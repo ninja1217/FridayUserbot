@@ -56,7 +56,7 @@ async def _(event):
     try:
         scheduler.remove_all_jobs()
     except:
-        await event.edit("`Are You Fking Insane?`")
+        await friday.tr_engine(event, "`Are You Fking Insane?`")
         return
     logger.info("Auto Tools Has Been Terminated")
     await sed.edit("`All Auto Tools Has Been Terminated`")

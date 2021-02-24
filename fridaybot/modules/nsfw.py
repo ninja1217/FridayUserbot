@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -28,29 +28,29 @@ async def nsfw(event):
     if event.fwd_from:
         return
     url = "https://nsfw-categorize.it/api/upload"
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     sed = await event.get_reply_message()
     photo = None
     sedpath = "./fridaydevs/"
     if sed and sed.media:
         if isinstance(sed.media, MessageMediaPhoto):
-            photo = await borg.download_media(sed.media, sedpath)
+            photo = await friday.download_media(sed.media, sedpath)
         elif "image" in sed.media.document.mime_type.split("/"):
-            photo = await borg.download_media(sed.media, sedpath)
+            photo = await friday.download_media(sed.media, sedpath)
         else:
-            await event.edit("Reply To Image")
+            await friday.tr_engine(event, "Reply To Image")
             return
     if photo:
         files = {"image": (f"{photo}", open(f"{photo}", "rb"))}
         r = requests.post(url, files=files).json()
         if r["status"] == "OK":
-            await event.edit(
+            await friday.tr_engine(event, 
                 "This image is classified as " + str(r["data"]["classification"])
             )
         if os.path.exists(photo):
             os.remove(photo)
         else:
-            await event.edit("Response UnsucessFull. Try Again.")
+            await friday.tr_engine(event, "Response UnsucessFull. Try Again.")
             if os.path.exists(photo):
                 os.remove(photo)
 
@@ -77,7 +77,7 @@ async def nsfw(event):
 #      else:
 #        pass   
 #    oiko = "<b>Links Generated Successfully</b>"+"\n"+"Search Query:- "+input_str+"\n"+oik
-#    await borg.send_message(
+#    await friday.send_message(
 #        event.chat_id,
 #        oiko,
 #        parse_mode="HTML",

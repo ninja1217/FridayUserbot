@@ -66,7 +66,7 @@ async def _(event):
     drawn_text = ImageDraw.Draw(img)
     drawn_text.text((10, 10), current_time, font=fnt, fill=(255, 255, 255))
     img.save(required_file_name)
-    await borg.send_file(  
+    await friday.send_file(  
         event.chat_id,
         required_file_name,
         reply_to=reply_msg_id,
@@ -82,7 +82,7 @@ async def _(event):
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
     oof = datetime_tz.strftime(f"**Time Zone :** `{Config.TZ}` \n\n**Date :** `%Y/%m/%d` \n**Time :** `%H:%M:%S`")
-    await event.edit(oof)
+    await friday.tr_engine(event, oof)
 
 CMD_HELP.update(
     {

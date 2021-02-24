@@ -268,7 +268,7 @@ async def checker(e):
     if e.fwd_from:
         return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("Fetching Information, Wait!")
+        await friday.tr_engine(event, "Fetching Information, Wait!")
         print(e.text)
         e.text
         modelnum = str(e.text)
@@ -353,7 +353,7 @@ async def checker(e):
         data = data.replace("' '", "")
         response = telegraph.create_page(modelnum[9:], html_content=data)
 
-        await e.edit("All Done !")
+        await friday.tr_engine(event, "All Done !")
         await wait(
             [
                 e.respond(
@@ -373,7 +373,7 @@ async def checker(e):
     if e.fwd_from:
         return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("Fetching Information, Wait!")
+        await friday.tr_engine(event, "Fetching Information, Wait!")
         print(e.text)
         e.text
         modelnum = str(e.text)
@@ -458,7 +458,7 @@ async def checker(e):
         data = data.replace("' '", "")
         response = telegraph.create_page(modelnum[9:], html_content=data)
 
-        await e.edit("All Done !")
+        await friday.tr_engine(event, "All Done !")
         await wait(
             [
                 e.respond(

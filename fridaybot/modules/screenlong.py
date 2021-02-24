@@ -16,9 +16,9 @@ async def _(event):
     if event.fwd_from:
         return
     if Config.GOOGLE_CHROME_BIN is None:
-        await event.edit("need to install Google Chrome. Module Stopping.")
+        await friday.tr_engine(event, "need to install Google Chrome. Module Stopping.")
         return
-    await event.edit("Processing ...")
+    await friday.tr_engine(event, "Processing ...")
     start = datetime.now()
     try:
         chrome_options = webdriver.ChromeOptions()
@@ -29,31 +29,31 @@ async def _(event):
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
-        await event.edit("Starting Google Chrome BIN")
+        await friday.tr_engine(event, "Starting Google Chrome BIN")
         driver = webdriver.Chrome(chrome_options=chrome_options)
         input_str = event.pattern_match.group(1)
         driver.get(input_str)
-        await event.edit("Calculating Page Dimensions")
+        await friday.tr_engine(event, "Calculating Page Dimensions")
         height = driver.execute_script(
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
         )
         width = driver.execute_script(
             "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);"
         )
-        await event.edit("Painting web-page")
+        await friday.tr_engine(event, "Painting web-page")
         driver.set_window_size(width + 100, height + 100)
         # Add some pixels on top of the calculated dimensions
         # for good measure to make the scroll bars disappear
         im_png = driver.get_screenshot_as_png()
         # saves screenshot of entire page
         driver.close()
-        await event.edit("Stopping Google Chrome BIN")
+        await friday.tr_engine(event, "Stopping Google Chrome BIN")
         message_id = event.message.id
         if event.reply_to_msg_id:
             message_id = event.reply_to_msg_id
         with io.BytesIO(im_png) as out_file:
             out_file.name = "@UniBorg.ScreenCapture.PNG"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 caption=input_str,
@@ -64,9 +64,9 @@ async def _(event):
             )
         end = datetime.now()
         ms = (end - start).seconds
-        await event.edit(f"Completed screencapture Process in {ms} seconds")
+        await friday.tr_engine(event, f"Completed screencapture Process in {ms} seconds")
     except Exception:
-        await event.edit(traceback.format_exc())
+        await friday.tr_engine(event, traceback.format_exc())
 
 
 CMD_HELP.update(

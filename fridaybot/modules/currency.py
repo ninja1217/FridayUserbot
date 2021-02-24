@@ -39,7 +39,7 @@ async def _(event):
             if currency_to in current_response["rates"]:
                 current_rate = float(current_response["rates"][currency_to])
                 rebmun = round(number * current_rate, 2)
-                await event.edit(
+                await friday.tr_engine(event, 
                     "**According to current rates,**\n {} **{}** = {} **{}**\n \n●▬▬▬▬▬ஜ۩❀۩ஜ▬▬▬▬▬●\n\n**Current Conversion Rates:**\n 1 **{}** = {} **{}**".format(
                         number,
                         currency_from,
@@ -51,13 +51,13 @@ async def _(event):
                     )
                 )
             else:
-                await event.edit(
+                await friday.tr_engine(event, 
                     "Welp, Hate to tell yout this but this Currency isn't supported **yet**.\n__Try__ `.currencies` __for a list of supported currencies.__"
                 )
         except e:
-            await event.edit(str(e))
+            await friday.tr_engine(event, str(e))
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             "**Syntax:**\n.currency amount from to\n**Example:**\n`.currency 10 usd inr`"
         )
     end = datetime.now()
@@ -72,7 +72,7 @@ async def list(ups):
     current_response = requests.get(request_url).json()
     dil_wale_puch_de_na_chaaa = current_response["rates"]
     for key, value in dil_wale_puch_de_na_chaaa.items():
-        await borg.send_message(
+        await friday.send_message(
             ups.chat_id,
             "**List of currencies:**\n {}\n*Tip:** Use `.gs` currency_code for more details on the currency.".format(
                 key

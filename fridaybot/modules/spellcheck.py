@@ -28,7 +28,7 @@ async def _(event):
     b = TextBlob(a)
     # print("corrected text: "+str(b.correct()))
     c = b.correct()
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Check Completed</b></u> \n\n<b>Original Text</b>:-  <code>{a}</code> \n<b>Corrected Text:-</b> <code>{c}</code>",
         parse_mode="HTML",
     )

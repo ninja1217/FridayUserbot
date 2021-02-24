@@ -28,7 +28,7 @@ async def _(event):
     if event.fwd_from:
         return
     start = datetime.now()
-    await stark.edit("`Trying To Connect...`")
+    await friday.tr_engine(event, "`Trying To Connect...`")
     # SHOW_DESCRIPTION = False
     input_str = event.pattern_match.group(
         1
@@ -45,12 +45,12 @@ async def _(event):
         output_str += "📃  [{}]({}) \n\n".format(text, url)
     end = datetime.now()
     ms = (end - start).seconds
-    await stark.edit(
+    await friday.tr_engine(event, 
         "searched Google for {} in {} seconds. \n{}".format(input_str, ms, output_str),
         link_preview=False,
     )
     await asyncio.sleep(5)
-    await stark.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
+    await friday.tr_engine(event, "Google: {}\n{}".format(input_str, output_str), link_preview=False)
 
 @friday.on(friday_on_cmd(pattern="grs"))
 async def _(event):
@@ -60,11 +60,11 @@ async def _(event):
     BASE_URL = "http://www.google.com"
     OUTPUT_STR = "Reply to an image to do Google Reverse Search"
     if event.reply_to_msg_id:
-        await event.edit("Pre Processing Media")
+        await friday.tr_engine(event, "Pre Processing Media")
         previous_message = await event.get_reply_message()
         previous_message_text = previous_message.message
         if previous_message.media:
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await friday.download_media(
                 previous_message, Config.TMP_DOWNLOAD_DIRECTORY
             )
             SEARCH_URL = "{}/searchbyimage/upload".format(BASE_URL)
@@ -87,7 +87,7 @@ async def _(event):
             request_url = SEARCH_URL.format(BASE_URL, previous_message_text)
             google_rs_response = requests.get(request_url, allow_redirects=False)
             the_location = google_rs_response.headers.get("Location")
-        await event.edit("Found Google Result. Pouring some soup on it!")
+        await friday.tr_engine(event, "Found Google Result. Pouring some soup on it!")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
@@ -109,7 +109,7 @@ async def _(event):
 More Info: Open this <a href="{the_location}">Link</a> in {ms} seconds""".format(
             **locals()
         )
-    await event.edit(OUTPUT_STR, parse_mode="HTML", link_preview=False)
+    await friday.tr_engine(event, OUTPUT_STR, parse_mode="HTML", link_preview=False)
 
 
 CMD_HELP.update(

@@ -69,7 +69,7 @@ async def hmm(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmmu = await event.edit("Colourzing..")
+    hmmu = await friday.tr_engine(event, "Colourzing..")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     net = cv2.dnn.readNetFromCaffe(
@@ -100,7 +100,7 @@ async def hmm(event):
     file_name = "Colour.png"
     ok = sedpath + "/" + file_name
     cv2.imwrite(ok, colorized)
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmmu.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
@@ -111,13 +111,13 @@ async def thumbnailer(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("`Reply to any Media File. I will Send You Its Thumb.`")
+        await friday.tr_engine(event, "`Reply to any Media File. I will Send You Its Thumb.`")
         return
     is_reply = await event.get_reply_message()
     try:
         thumbstark = await event.client.download_media(is_reply.media, thumb=-1)
     except:
-        await event.edit("`Well, My Eyes Couldn't Find Any Thumb. :/`")
+        await friday.tr_engine(event, "`Well, My Eyes Couldn't Find Any Thumb. :/`")
         return
     await event.delete()
     await event.client.send_file(event.chat_id, thumbstark, reply_to=is_reply)
@@ -131,12 +131,12 @@ async def hmm(event):
     life = Config.DEEP_API_KEY
     if life == None:
         life = "quickstart-QUdJIGlzIGNvbWluZy4uLi4K"
-        await event.edit("No Api Key Found, Please Add it. For Now Using Local Key")
+        await friday.tr_engine(event, "No Api Key Found, Please Add it. For Now Using Local Key")
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
     headers = {"api-key": life}
-    hmm = await event.edit("Colourzing..")
+    hmm = await friday.tr_engine(event, "Colourzing..")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     img_file = {
@@ -148,7 +148,7 @@ async def hmm(event):
     hmmyes = sedcopy["detections"]
     game = sedcopy["nsfw_score"]
     final = f"**IMG RESULT** \n**Detections :** `{hmmyes}` \n**NSFW SCORE :** `{game}`"
-    await borg.send_message(event.chat_id, final)
+    await friday.send_message(event.chat_id, final)
     await hmm.delete()
     if os.path.exists(img):
         os.remove(img)
@@ -183,13 +183,13 @@ async def _(event):
         try:
             usercolor = ImageColor.getrgb(input_str)
         except Exception as e:
-            await event.edit(str(e))
+            await friday.tr_engine(event, str(e))
             return False
         else:
             im = Image.new(mode="RGB", size=(1280, 720), color=usercolor)
             im.save("@Colour.png", "PNG")
             input_str = input_str.replace("#", "#COLOR_")
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 "@Colour.png",
                 force_document=False,
@@ -199,7 +199,7 @@ async def _(event):
             os.remove("@Colour.png")
             await event.delete()
     else:
-        await event.edit("Syntax: `.color <color_code>`")
+        await friday.tr_engine(event, "Syntax: `.color <color_code>`")
         
 
         
@@ -218,7 +218,7 @@ async def _(event):
     
     captin = f"Fake Image By Friday.\nGet Your Own Friday From @FRIDAYCHAT."
     fole = "FRIDAYOT.jpg"
-    await borg.send_file(event.chat_id, fole, caption=captin)
+    await friday.send_file(event.chat_id, fole, caption=captin)
     await poppy.delete()
     await friday.run_cmd("rm /root/fridaybot/FRIDAYOT.jpg ")
     
@@ -230,7 +230,7 @@ async def iamthug(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmm = await event.edit("`Converting To thug Image..`")
+    hmm = await friday.tr_engine(event, "`Converting To thug Image..`")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     imagePath = img
@@ -249,7 +249,7 @@ async def iamthug(event):
     file_name = "fridaythug.png"
     ok = sedpath + "/" + file_name
     background.save(ok, "PNG")
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmm.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
@@ -262,7 +262,7 @@ async def iamnone(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmm = await event.edit("`Converting To Masked Image..`")
+    hmm = await friday.tr_engine(event, "`Converting To Masked Image..`")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     imagePath = img
@@ -282,7 +282,7 @@ async def iamnone(event):
     file_name = "masked_img.png"
     ok = sedpath + "/" + file_name
     background.save(ok, "PNG")
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmm.delete()
     for files in (ok, img, maskPath):
         if files and os.path.exists(files):
@@ -297,7 +297,7 @@ async def toony(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmmu = await event.edit("`Converting Toonized Image..`")
+    hmmu = await friday.tr_engine(event, "`Converting Toonized Image..`")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     imagez = cv2.imread(img)
@@ -309,7 +309,7 @@ async def toony(event):
     ok = sedpath + "/" + file_name
     cv2.imwrite(ok, cartoon_image_style_2)
     # Upload it
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmmu.delete()
     # Remove all Files
     for files in (ok, img):
@@ -322,7 +322,7 @@ async def toony(event):
 async def lolmetrg(event):
     if event.fwd_from:
         return
-    await event.edit("`Triggered This Image`")
+    await friday.tr_engine(event, "`Triggered This Image`")
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
     url_s = upload_file(img)
@@ -331,7 +331,7 @@ async def lolmetrg(event):
     r = requests.get(lolul)
     open("triggered.gif", "wb").write(r.content)
     lolbruh = "triggered.gif"
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id, lolbruh, caption="You got triggered....", reply_to=sed
     )
     for files in (lolbruh, img):
@@ -343,7 +343,7 @@ async def lolmetrg(event):
 async def lolmetrg(event):
     if event.fwd_from:
         return
-    await event.edit("`Meking This Guy Gey.`")
+    await friday.tr_engine(event, "`Meking This Guy Gey.`")
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
     url_s = upload_file(img)
@@ -352,7 +352,7 @@ async def lolmetrg(event):
     r = requests.get(lolul)
     open("geys.png", "wb").write(r.content)
     lolbruh = "geys.png"
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id, lolbruh, caption="`You iz Gey.`", reply_to=sed
     )
     for files in (lolbruh, img):
@@ -364,7 +364,7 @@ async def lolmetrg(event):
 async def lolmetrg(event):
     if event.fwd_from:
         return
-    await event.edit("`Pixing This Image.`")
+    await friday.tr_engine(event, "`Pixing This Image.`")
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
     url_s = upload_file(img)
@@ -373,7 +373,7 @@ async def lolmetrg(event):
     r = requests.get(lolul)
     open("pix.png", "wb").write(r.content)
     lolbruh = "pix.png"
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id, lolbruh, caption="`Pixeled This Image.`", reply_to=sed
     )
     for files in (lolbruh, img):
@@ -385,13 +385,13 @@ async def lolmetrg(event):
 async def lolmetrg(event):
     if event.fwd_from:
         return
-    await event.edit("`Making Comment`")
+    await friday.tr_engine(event, "`Making Comment`")
     sed = await event.get_reply_message()
     hmm_s = await event.client(GetFullUserRequest(sed.sender_id))
     if not hmm_s.profile_photo:
         imglink = 'https://telegra.ph/file/b9684cda357dfbe6f5748.jpg'
     elif hmm_s.profile_photo:
-        img = await borg.download_media(hmm_s.profile_photo, sedpath)
+        img = await friday.download_media(hmm_s.profile_photo, sedpath)
         url_s = upload_file(img)
         imglink = f"https://telegra.ph{url_s[0]}"
     first_name = html.escape(hmm_s.user.first_name)
@@ -406,7 +406,7 @@ async def lolmetrg(event):
     open("ytc.png", "wb").write(r.content)
     lolbruh = "ytc.png"
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id, lolbruh, caption="`Hmm Nice.`", reply_to=sed
     )
     for files in (lolbruh, img):
@@ -438,7 +438,7 @@ async def hmm(event):
 
     file_name = "testing.png"
     ok = "./starkgangz/" + file_name
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmmu.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
@@ -453,7 +453,7 @@ async def hmm(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmmu = await event.edit("hmm.. Creating a black&White image...")
+    hmmu = await friday.tr_engine(event, "hmm.. Creating a black&White image...")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     img1 = cv2.imread(img)
@@ -463,7 +463,7 @@ async def hmm(event):
     cv2.imwrite("./starkgangz/testing.png", gray_img)
     file_name = "testing.png"
     ok = "./starkgangz/" + file_name
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmmu.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
@@ -480,7 +480,7 @@ async def img(event):
         return
     text = event.pattern_match.group(1)
     if not text:
-        await event.edit("No input found!")
+        await friday.tr_engine(event, "No input found!")
         return
     if ";" in text:
         search, result = text.split(";", 1)
@@ -509,12 +509,12 @@ async def img(event):
 async def lottiepie(event):
     if event.fwd_from:
         return
-    await event.edit("`Prooooooccccesssssssinggggg.....`")
+    await friday.tr_engine(event, "`Prooooooccccesssssssinggggg.....`")
     message = await event.get_reply_message()
     if message.media and message.media.document:
         mime_type = message.media.document.mime_type
         if not "tgsticker" in mime_type:
-            await event.edit("Not Supported Yet.")
+            await friday.tr_engine(event, "Not Supported Yet.")
             return
         await message.download_media("tgs.tgs")
         await runcmd("lottie_convert.py tgs.tgs json.json")
@@ -531,7 +531,7 @@ async def lottiepie(event):
         open("json.json", "w").write(jsn)
         await event.delete()
         await friday.run_cmd(f"lottie_convert.py json.json tgs.tgs")
-        await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
+        await friday.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
 
@@ -543,7 +543,7 @@ async def img(event):
         return
     text = event.pattern_match.group(1)
     if not text:
-        await event.edit("No input found!  --__--")
+        await friday.tr_engine(event, "No input found!  --__--")
         return
     if ":" in text:
         username, texto = text.split(":", 1)
@@ -562,7 +562,7 @@ async def img(event):
     img.save("./starkgangz/testpb.jpg")
     file_name = "testpb.jpg"
     ok = "./starkgangz/" + file_name
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     os.remove(files)
     for files in (ok, img):
         if files and os.path.exists(files):
@@ -625,7 +625,7 @@ async def spinshit(message):
     if os.path.exists(output_vid):
         round_vid = os.path.join(path, "out_round.mp4")
         await crop_vid(output_vid, round_vid)
-        await borg.send_file(
+        await friday.send_file(
             message.chat_id, round_vid, video_note=True, reply_to=reply.id
         )
         await message.delete()
@@ -663,7 +663,7 @@ async def hmm(event):
     im.save("./starkgangz/livenews.png")
     file_name = "livenews.png"
     ok = "./starkgangz/" + file_name
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     await hmmu.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
@@ -674,7 +674,7 @@ async def holastark2(event):
     if event.fwd_from:
         return
     famous_people = ['Modi', 'Trump', 'Albert', 'Tony-stark', 'Stark-Gang', 'Gandhi']
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     text = event.pattern_match.group(2)
     img = Image.open('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
     d1 = ImageDraw.Draw(img)
@@ -691,7 +691,7 @@ async def holastark2(event):
     await event.delete()
     ok = sedpath + "/" + file_name
     img.save(ok, "PNG")
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     if os.path.exists(ok):
         os.remove(ok)
         
@@ -700,7 +700,7 @@ async def holastark2(event):
 async def slogo(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     text = event.pattern_match.group(2)
     img = Image.open('./resources/star/20201125_094030.jpg')
     draw = ImageDraw.Draw(img)
@@ -718,7 +718,7 @@ async def slogo(event):
     draw.text((x, y), text, font=font, fill="white", stroke_width=30, stroke_fill="black")
     fname2 = "LogoBy@FRIDAYOT.png"
     img.save(fname2, "png")
-    await borg.send_file(event.chat_id, fname2, caption="Made By @FridayOT")
+    await friday.send_file(event.chat_id, fname2, caption="Made By @FridayOT")
     if os.path.exists(fname2):
             os.remove(fname2)
 
@@ -728,7 +728,7 @@ async def slogo(event):
 async def yufytf(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     text = event.pattern_match.group(2)
     img = Image.open('./resources/Blankmeisnub.jpg')
     draw = ImageDraw.Draw(img)
@@ -741,7 +741,7 @@ async def yufytf(event):
     await event.delete()
     ok = sedpath + "/" + file_name
     img.save(ok, "PNG")
-    await borg.send_file(event.chat_id, ok, caption="Made By @FridayOT")
+    await friday.send_file(event.chat_id, ok, caption="Made By @FridayOT")
     if os.path.exists(ok):
         os.remove(ok)
     
@@ -751,7 +751,7 @@ async def yufytf(event):
 async def holastark(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     text = event.pattern_match.group(2)
     font_size = 3.6
     font_color = (51, 51, 51)
@@ -779,7 +779,7 @@ async def holastark(event):
     ok = sedpath + "/" + file_name
     cv2.imwrite(ok, img)
     await event.delete()
-    await borg.send_file(event.chat_id, file=ok, caption="Powered By @FridayOT")
+    await friday.send_file(event.chat_id, file=ok, caption="Powered By @FridayOT")
     if os.path.exists(ok):
         os.remove(ok)
     
@@ -791,7 +791,7 @@ async def warnerstark_s(event):
     ws = event.pattern_match.group(1)
     img = await convert_to_image(event, borg)
     image = cv2.imread(img)
-    await event.edit("`Processing..`")
+    await friday.tr_engine(event, "`Processing..`")
     if ws == "flip":
         flipped = cv2.flip(image, 0)
         file_name = "Flipped.webp"
@@ -841,7 +841,7 @@ async def warnerstark_s(event):
         cv2.imwrite(ok, pencil_image)
         warnerstark = "Hehe, Drawn By @FridayOT"
     await event.delete()
-    await borg.send_file(event.chat_id, file=ok, caption=warnerstark)
+    await friday.send_file(event.chat_id, file=ok, caption=warnerstark)
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
@@ -851,10 +851,10 @@ async def warnerstarkgang(event):
     if event.fwd_from:
         return
     img = await convert_to_image(event, borg)
-    await event.edit("`Coverting This Media To Image Now.`")
+    await friday.tr_engine(event, "`Coverting This Media To Image Now.`")
     so = "**Powered By @FridayOT**"
     await event.delete()
-    await borg.send_file(event.chat_id, file=img, caption=so)
+    await friday.send_file(event.chat_id, file=img, caption=so)
     os.remove(img)
     
 @friday.on(friday_on_cmd(pattern="compressimage(?: |$)(.*)"))
@@ -862,21 +862,21 @@ async def asscompress(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("Reply To Image To Compress It")
+        await friday.tr_engine(event, "Reply To Image To Compress It")
         return
     sed = await event.get_reply_message()
     if not sed.photo:
-        await event.edit("This Only Works On Images")
+        await friday.tr_engine(event, "This Only Works On Images")
         return
     sedq = int(event.pattern_match.group(1)) if event.pattern_match.group(1) else 75
     image_path = await friday.download_media(sed.media)
     im = Image.open(image_path)
     ok = "CompressedBy@FridayOt.png"
     im.save(ok, optimize=True, quality=sedq)
-    await event.edit("`Compressing This Image.`")
+    await friday.tr_engine(event, "`Compressing This Image.`")
     so = "**Powered By @FridayOT**"
     await event.delete()
-    await borg.send_file(event.chat_id, file=ok, caption=so)
+    await friday.send_file(event.chat_id, file=ok, caption=so)
     for files in (ok, image_path):
         if files and os.path.exists(files):
             os.remove(files)
@@ -887,7 +887,7 @@ async def asscompress(event):
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Oh Wait Let Me Get Wear Glasses")
+    await friday.tr_engine(event, "Oh Wait Let Me Get Wear Glasses")
     if not event.reply_to_msg_id:
         ommhg = await friday.edit_or_reply(event, "Reply To Any Image.")
         return
@@ -915,12 +915,12 @@ async def fasty(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("Reply To Any Video.")
+        await friday.tr_engine(event, "Reply To Any Video.")
         return
-    await event.edit("Ah, Shit. Here it Starts.")
+    await friday.tr_engine(event, "Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
-        await event.edit("`Oho, Reply To Video Only`")
+        await friday.tr_engine(event, "`Oho, Reply To Video Only`")
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
@@ -928,7 +928,7 @@ async def fasty(event):
     await friday.run_cmd(cmd)
     filem = "FastMotionBy@FridayOT.mp4"
     if not os.path.exists(filem):
-        await event.edit("**Process, Failed !**")
+        await friday.tr_engine(event, "**Process, Failed !**")
         return
     final_file = await uf(
             file_name=filem,
@@ -941,7 +941,7 @@ async def fasty(event):
             ),
         )
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         final_file,
         caption="**Fast Motion** - Powered By @FridayOT")
@@ -953,13 +953,13 @@ async def fasty(event):
 async def fasty(event):
     if event.fwd_from:
         return
-    await event.edit("Ah, Shit. Here it Starts.")
+    await friday.tr_engine(event, "Ah, Shit. Here it Starts.")
     if not event.reply_to_msg_id:
-        await event.edit("Reply To Any Video.")
+        await friday.tr_engine(event, "Reply To Any Video.")
         return
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
-        await event.edit("`Oho, Reply To Video Only`")
+        await friday.tr_engine(event, "`Oho, Reply To Video Only`")
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
@@ -967,7 +967,7 @@ async def fasty(event):
     await friday.run_cmd(cmd)
     filem = "SlowMotionBy@FridayOT.mp4"
     if not os.path.exists(filem):
-        await event.edit("**Process, Failed !**")
+        await friday.tr_engine(event, "**Process, Failed !**")
         return
     final_file = await uf(
             file_name=filem,
@@ -979,7 +979,7 @@ async def fasty(event):
                 )
             ),
         )
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         final_file,
         caption="**Slow Motion** - Powered By @FridayOT")
@@ -993,12 +993,12 @@ async def flip(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("Reply To Any Video.")
+        await friday.tr_engine(event, "Reply To Any Video.")
         return
-    await event.edit("Ah, Shit. Here it Starts.")
+    await friday.tr_engine(event, "Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
-        await event.edit("`Oho, Reply To Video Only`")
+        await friday.tr_engine(event, "`Oho, Reply To Video Only`")
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
@@ -1006,7 +1006,7 @@ async def flip(event):
     await friday.run_cmd(cmd)
     filem = "FlipedBy@FridayOT.mp4"
     if not os.path.exists(filem):
-        await event.edit("**Process, Failed !**")
+        await friday.tr_engine(event, "**Process, Failed !**")
         return
     final_file = await uf(
             file_name=filem,
@@ -1019,7 +1019,7 @@ async def flip(event):
             ),
         )
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         final_file,
         caption="**Video Flipped** - Powered By @FridayOT")
@@ -1032,12 +1032,12 @@ async def audio_extract(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("Reply To Any Video.")
+        await friday.tr_engine(event, "Reply To Any Video.")
         return
-    await event.edit("Ah, Shit. Here it Starts.")
+    await friday.tr_engine(event, "Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
-        await event.edit("`Oho, Reply To Video Only`")
+        await friday.tr_engine(event, "`Oho, Reply To Video Only`")
         return
     hmm = await event.client.download_media(kk.media)
     try:
@@ -1050,7 +1050,7 @@ async def audio_extract(event):
     await friday.run_cmd(cmd)
     filem = name_out
     if not os.path.exists(filem):
-        await event.edit("**Process, Failed !**")
+        await friday.tr_engine(event, "**Process, Failed !**")
         return
     final_file = await uf(
             file_name=filem,
@@ -1063,7 +1063,7 @@ async def audio_extract(event):
             ),
         )
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         final_file,
         thumb=thumb,
@@ -1077,12 +1077,12 @@ async def convert_to_note(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("Reply To Any Video.")
+        await friday.tr_engine(event, "Reply To Any Video.")
         return
-    await event.edit("Ah, Shit. Here it Starts.")
+    await friday.tr_engine(event, "Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not (kk.video or kk.video_note or kk.gif or kk.video_note):
-        await event.edit("`Oho, Reply To Video Only.`")
+        await friday.tr_engine(event, "`Oho, Reply To Video Only.`")
         return
     hmm = await event.client.download_media(kk.media)
     try:
@@ -1093,7 +1093,7 @@ async def convert_to_note(event):
     filem = "ConvertedBy@FridayOT.mp4"
     await crop_vid(hmm, filem)
     if not os.path.exists(filem):
-        await event.edit("**Process, Failed !**")
+        await friday.tr_engine(event, "**Process, Failed !**")
         return
     final_file = await uf(
             file_name=filem,
@@ -1106,7 +1106,7 @@ async def convert_to_note(event):
             ),
         )
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         final_file,
         thumb=thumb, 
@@ -1124,12 +1124,12 @@ async def starkmeme(event):
         return
     hmm = event.pattern_match.group(1)
     if hmm == None:
-        await event.edit("Give Some Text")
+        await friday.tr_engine(event, "Give Some Text")
         return
     if not event.reply_to_msg_id:
-        await event.edit("`PLease, Reply To A MsG`")
+        await friday.tr_engine(event, "`PLease, Reply To A MsG`")
         return
-    mryeast = await event.edit("Making Memes Until Praise MrBeast.")
+    mryeast = await friday.tr_engine(event, "Making Memes Until Praise MrBeast.")
     await event.get_reply_message()
     seds = await convert_to_image(event, borg)
     if ";" in hmm:
@@ -1140,7 +1140,7 @@ async def starkmeme(event):
         bottom_text = second_txt
         generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
         imgpath = sedpath + "/" + "memeimg.webp"
-        await borg.send_file(event.chat_id, imgpath)
+        await friday.send_file(event.chat_id, imgpath)
         if os.path.exists(imgpath):
             os.remove(imgpath)
         await mryeast.delete()
@@ -1149,7 +1149,7 @@ async def starkmeme(event):
         bottom_text = ""
         generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
         imgpath = sedpath + "/" + "memeimg.webp"
-        await borg.send_file(event.chat_id, imgpath)
+        await friday.send_file(event.chat_id, imgpath)
         if os.path.exists(imgpath):
             os.remove(imgpath)
         await mryeast.delete()
@@ -1199,13 +1199,13 @@ async def glitch(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("`Are You on Weed? Please Reply To Image`")
+        await friday.tr_engine(event, "`Are You on Weed? Please Reply To Image`")
         return
     sed = await event.get_reply_message()
-    okbruh = await event.edit("`Gli, Glitchiiingggg.....`")
+    okbruh = await friday.tr_engine(event, "`Gli, Glitchiiingggg.....`")
     photolove = await convert_to_image(event, friday)
     pathsn = f"./starkgangz/@fridayot.gif"
-    await event.edit("Glitching Image :/")
+    await friday.tr_engine(event, "Glitching Image :/")
     glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
     glitch_imgs[0].save(
         pathsn,
@@ -1216,9 +1216,9 @@ async def glitch(event):
         loop=LOOP,
     )
     c_time = time.time()
-    await event.edit("Optimizing Now")
+    await friday.tr_engine(event, "Optimizing Now")
     optimize(pathsn)
-    await event.edit("Starting Upload")
+    await friday.tr_engine(event, "Starting Upload")
     stark_m = await uf(
         	file_name="Glitched@FridayOt.gif",
             client=borg,
@@ -1229,7 +1229,7 @@ async def glitch(event):
                 )
             ),
         )
-    await borg.send_file(event.chat_id,
+    await friday.send_file(event.chat_id,
                          stark_m,
                          caption="Powered By @FridayOT")
     await okbruh.delete()

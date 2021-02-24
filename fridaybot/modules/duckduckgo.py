@@ -13,11 +13,11 @@ async def _(event):
     sample_url = "https://duckduckgo.com/?q={}".format(input_str.replace(" ", "+"))
     if sample_url:
         link = sample_url.rstrip()
-        await event.edit(
+        await friday.tr_engine(event, 
             "Let me 🦆 DuckDuckGo that for you:\n🔎 [{}]({})".format(input_str, link)
         )
     else:
-        await event.edit("something is wrong. please try again later.")
+        await friday.tr_engine(event, "something is wrong. please try again later.")
 
 
 CMD_HELP.update(

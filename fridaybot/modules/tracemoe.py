@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -27,11 +27,11 @@ async def anime_name(event):
     tracemoe = tracemoepy.tracemoe.TraceMoe()
     file_s = await convert_to_image(event, friday)
     c_time = time.time()
-    await event.edit("`Searching For This Anime. Bruh.`")
+    await friday.tr_engine(event, "`Searching For This Anime. Bruh.`")
     try:
       st = tracemoe.search(file_s, encode=True)
     except:
-      await event.edit("`SomeThing is Sad, Failed.`")
+      await friday.tr_engine(event, "`SomeThing is Sad, Failed.`")
       return
     video = tracemoe.natural_preview(st)
     with open('preview@FridayOT.mp4', 'wb') as f:

@@ -66,7 +66,7 @@ async def on_view_blacklist(event):
     if len(OUT_STR) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
             out_file.name = "blacklist.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -93,7 +93,7 @@ async def on_delete_blacklist(event):
     for trigger in to_unblacklist:
         if sql.rm_from_blacklist(event.chat_id, trigger.lower()):
             successful += 1
-    await sensibleisleecher.edit(
+    await friday.tr_engine(event, 
         f"Removed {successful} / {len(to_unblacklist)} from the blacklist"
     )
 

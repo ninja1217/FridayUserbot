@@ -11,7 +11,7 @@ async def _(event):
     if event.fwd_from:
         return
     input = event.pattern_match.group(1)
-    await event.edit("[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")")
+    await friday.tr_engine(event, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")")
 
 
 CMD_HELP.update(

@@ -21,26 +21,26 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.is_reply:
-        await event.edit("Reply to a file to compress it. Bruh.")
+        await friday.tr_engine(event, "Reply to a file to compress it. Bruh.")
         return
-    mone = await event.edit("Processing ...")
+    mone = await friday.tr_engine(event, "Processing ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         try:
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await friday.download_media(
                 reply_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
             )
             directory_name = downloaded_file_name
-            await event.edit(downloaded_file_name)
+            await friday.tr_engine(event, downloaded_file_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
     zipfile.ZipFile(directory_name + ".zip", "w", zipfile.ZIP_DEFLATED).write(
         directory_name
     )
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         directory_name + ".zip",
         caption="**Zipped!**",
@@ -64,7 +64,7 @@ def zipdir(path, ziph):
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.edit("Processing ...")
+    mone = await friday.tr_engine(event, "Processing ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
@@ -89,7 +89,7 @@ async def _(event):
             zip_ref.extractall(extracted)
         filename = sorted(get_lst_of_files(extracted, []))
         # filename = filename + "/"
-        await event.edit("Unzipping now")
+        await friday.tr_engine(event, "Unzipping now")
         # r=root, d=directories, f = files
         for single_file in filename:
             if os.path.exists(single_file):
@@ -99,7 +99,7 @@ async def _(event):
                 supports_streaming = False
                 document_attributes = []
                 try:
-                    await bot.send_file(
+                    await friday.send_file(
                         event.chat_id,
                         single_file,
                         caption=f"**Unzipped** `{caption_rts}`",

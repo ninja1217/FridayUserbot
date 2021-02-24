@@ -21,11 +21,11 @@ async def _(event):
     )
     response_api = requests.get(sample_url).text
     if response_api:
-        await event.edit(
+        await friday.tr_engine(event, 
             "[{}]({})\n`Thank me Later 🙃` ".format(input_str, response_api.rstrip())
         )
     else:
-        await event.edit("something is wrong. please try again later.")
+        await friday.tr_engine(event, "something is wrong. please try again later.")
 
 
 CMD_HELP.update(

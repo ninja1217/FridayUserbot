@@ -14,10 +14,10 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 async def _(event):
     user_s, error = await get_full_user(event)
     if user_s is None:
-        await event.edit("`Something Went Really Wrong !`")
+        await friday.tr_engine(event, "`Something Went Really Wrong !`")
         return
     if user_s.common_chats_count == 0:
-        await event.edit("**No Chats in Common !**")
+        await friday.tr_engine(event, "**No Chats in Common !**")
         return
     sed = await event.client(GetCommonChatsRequest(user_id=user_s.user.id, max_id=0, limit=100))
     lol = f"**User-ID :** `{user_s.user.id}` \n**First-Name :** `{user_s.user.first_name}` \n**Total Groups In Common :** `{user_s.common_chats_count}` \n\n"
@@ -26,7 +26,7 @@ async def _(event):
             lol += f"**Chat ID :** `{stark.id}` \n**Chat Name :** `{stark.title}` \n**Chat-UserName :** `{stark.username}` \n\n"
         except:
             lol += f"**Chat ID :** `{stark.id}` \n**Chat Name :** `{stark.title}` \n\n"
-    await event.edit(lol) 
+    await friday.tr_engine(event, lol) 
     
 @friday.on(friday_on_cmd("info(?: |$)(.*)"))
 @friday.on(sudo_cmd("info(?: |$)(.*)", allow_sudo=True))
@@ -91,7 +91,7 @@ async def _(event):
     message_id_to_reply = event.message.reply_to_msg_id
     if not message_id_to_reply:
         message_id_to_reply = event.message.id
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         reply_to=message_id_to_reply,
@@ -169,7 +169,7 @@ async def gibinfo(event):
         try:
             lolu = await event.client(GetFullUserRequest(event.pattern_match.group(1)))
         except:
-            await event.edit("<i>No User Found.</i>", parse_mode="HTML")
+            await friday.tr_engine(event, "<i>No User Found.</i>", parse_mode="HTML")
             return
     try:
         cas_url = f"https://combot.org/api/cas/check?user_id={lolu.user.id}"
@@ -198,7 +198,7 @@ async def gibinfo(event):
         f"<b>- CAS Banned :</b> {reason} \n"
         f"<b>- Nospam+ Banned :</b> {oki}"
     )
-    await event.edit(infomsg, parse_mode="HTML")
+    await friday.tr_engine(event, infomsg, parse_mode="HTML")
 
 
 CMD_HELP.update(

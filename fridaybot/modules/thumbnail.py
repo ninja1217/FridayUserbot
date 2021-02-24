@@ -47,11 +47,11 @@ def get_video_thumb(file, output=None, width=320):
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Processing ...")
+    await friday.tr_engine(event, "Processing ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
-        downloaded_file_name = await borg.download_media(
+        downloaded_file_name = await friday.download_media(
             await event.get_reply_message(), Config.TMP_DOWNLOAD_DIRECTORY
         )
         if downloaded_file_name.endswith(".mp4"):
@@ -71,12 +71,12 @@ async def _(event):
         img.save(thumb_image_path, "JPEG")
         # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
         os.remove(downloaded_file_name)
-        await event.edit(
+        await friday.tr_engine(event, 
             "Custom video / file thumbnail saved. "
             + "This image will be used in the upload, till `.clearthumbnail`."
         )
     else:
-        await event.edit("Reply to a photo to save custom thumbnail")
+        await friday.tr_engine(event, "Reply to a photo to save custom thumbnail")
 
 
 @friday.on(friday_on_cmd(pattern="clearthumbnail"))
@@ -85,7 +85,7 @@ async def _(event):
         return
     if os.path.exists(thumb_image_path):
         os.remove(thumb_image_path)
-    await event.edit("✅ Custom thumbnail cleared succesfully.")
+    await friday.tr_engine(event, "✅ Custom thumbnail cleared succesfully.")
 
 
 @friday.on(friday_on_cmd(pattern="getthumbnail"))
@@ -95,13 +95,13 @@ async def _(event):
     if event.reply_to_msg_id:
         r = await event.get_reply_message()
         try:
-            a = await borg.download_media(
+            a = await friday.download_media(
                 r.media.document.thumbs[0], Config.TMP_DOWNLOAD_DIRECTORY
             )
         except Exception as e:
-            await event.edit(str(e))
+            await friday.tr_engine(event, str(e))
         try:
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 a,
                 force_document=False,
@@ -111,10 +111,10 @@ async def _(event):
             os.remove(a)
             await event.delete()
         except Exception as e:
-            await event.edit(str(e))
+            await friday.tr_engine(event, str(e))
     elif os.path.exists(thumb_image_path):
         caption_str = "Currently Saved Thumbnail. Clear with `.clearthumbnail`"
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             thumb_image_path,
             caption=caption_str,
@@ -122,9 +122,9 @@ async def _(event):
             allow_cache=False,
             reply_to=event.message.id,
         )
-        await event.edit(caption_str)
+        await friday.tr_engine(event, caption_str)
     else:
-        await event.edit("Reply `.gethumbnail` as a reply to a media")
+        await friday.tr_engine(event, "Reply `.gethumbnail` as a reply to a media")
 
 
 CMD_HELP.update(

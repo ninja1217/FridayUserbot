@@ -23,7 +23,7 @@ json_codes = {
 async def oki(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing...`")
+    await friday.tr_engine(event, "`Processing...`")
     extra = None
     args = event.pattern_match.group(1)
     if event.reply_to_msg_id:
@@ -40,31 +40,31 @@ async def oki(event):
                 userm = await event.client(GetFullUserRequest(userz))
                 user = userm.user.id
             except:
-                await event.edit("<i>No User Found.</i>", parse_mode="HTML")
+                await friday.tr_engine(event, "<i>No User Found.</i>", parse_mode="HTML")
                 return
         if len(args) == 2:
             extra = args[1]
         if not json_codes.get(extra):
-            await event.edit('`Please Use Valid Ban Codes.`')
+            await friday.tr_engine(event, '`Please Use Valid Ban Codes.`')
             return
         if not user:
-            await event.edit("Reply To User Or Mention a User.")
+            await friday.tr_engine(event, "Reply To User Or Mention a User.")
             return
     try:
         sclient.ban(user, extra)
-        await borg.send_message("nospamplusfed", f"/fban {user} {extra} {json_codes[extra]}")
-        await event.edit(
+        await friday.send_message("nospamplusfed", f"/fban {user} {extra} {json_codes[extra]}")
+        await friday.tr_engine(event, 
             f"**User :** `{user}` \n**Reason :** `{extra} {json_codes[extra]}` \n**Banned Sucessfully !**"
         )
     except Exception as e:
-        await event.edit("**Errors : **" + str(e))
+        await friday.tr_engine(event, "**Errors : **" + str(e))
 
 
 @borg.on(admin_cmd(pattern="nspuban(?: |$)(.*)"))
 async def oka(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing...`")
+    await friday.tr_engine(event, "`Processing...`")
     args = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -78,26 +78,26 @@ async def oka(event):
                 userm = await event.client(GetFullUserRequest(userz))
                 user = userm.user.id
             except:
-                await event.edit("<i>No User Found.</i>", parse_mode="HTML")
+                await friday.tr_engine(event, "<i>No User Found.</i>", parse_mode="HTML")
                 return
         if not user:
-            await event.edit("Reply To User Or Mention a User.")
+            await friday.tr_engine(event, "Reply To User Or Mention a User.")
             return
     try:
         gensys2 = sclient.unban(user)
-        await borg.send_message("nospamplusfed", f"/unfban {user}")
-        await event.edit(f"**User :** `{user}` \n**UnBanned Sucessfully !**")
+        await friday.send_message("nospamplusfed", f"/unfban {user}")
+        await friday.tr_engine(event, f"**User :** `{user}` \n**UnBanned Sucessfully !**")
     except Exception as e:
-        await event.edit("**Errors : **" + str(e))
+        await friday.tr_engine(event, "**Errors : **" + str(e))
 
 @borg.on(admin_cmd(pattern="generatetoken"))
 async def tokens(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing...`")
+    await friday.tr_engine(event, "`Processing...`")
     okbabe = secrets.token_urlsafe(16)
     try:
         skynet = sclient.new_token(okbabe)
-        await event.edit(f"**New Token** \n**Token** : `{okbabe}`")
+        await friday.tr_engine(event, f"**New Token** \n**Token** : `{okbabe}`")
     except Exception as e:
-        await event.edit("**Errors : **" + str(e))
+        await friday.tr_engine(event, "**Errors : **" + str(e))

@@ -76,11 +76,11 @@ async def apk(event):
             + "'>View in Play Store</a>"
         )
         app_details += "\n\n===> @FridayOT <==="
-        await event.edit(app_details, link_preview=True, parse_mode="HTML")
+        await friday.tr_engine(event, app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await event.edit("No result found in search. Please enter **Valid app name**")
+        await friday.tr_engine(event, "No result found in search. Please enter **Valid app name**")
     except Exception as err:
-        await event.edit("Exception Occured:- " + str(err))
+        await friday.tr_engine(event, "Exception Occured:- " + str(err))
 
 
 @friday.on(friday_on_cmd(pattern="appr (.*)"))
@@ -149,11 +149,11 @@ async def apkr(event):
         )
         app_details += "\n\n<b>Download : </b> <a href='https://t.me/joinchat/JCu-H1NikiYDgNjpjPYd4A'>Request_Here</a>"
         app_details += "\n\n===> @FridayOT <==="
-        await event.edit(app_details, link_preview=True, parse_mode="HTML")
+        await friday.tr_engine(event, app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await event.edit("No result found in search. Please enter **Valid app name**")
+        await friday.tr_engine(event, "No result found in search. Please enter **Valid app name**")
     except Exception as err:
-        await event.edit("Exception Occured:- " + str(err))
+        await friday.tr_engine(event, "Exception Occured:- " + str(err))
 
 
 CMD_HELP.update(

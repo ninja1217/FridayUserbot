@@ -25,7 +25,7 @@ async def _(event):
     if event.fwd_from:
         return
     if Config.GPLINKS_API_KEY is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "Need to get an API key from https://gplinks.in\nModule stopping!"
         )
         return
@@ -56,7 +56,7 @@ Shortened Link:- {pop}"""
     
     
     
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         hel,
         parse_mode="HTML"

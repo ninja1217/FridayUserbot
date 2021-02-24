@@ -40,7 +40,7 @@ async def _(car):
     final_output = "**EQUATION**: `{}` \n\n **SOLUTION**: \n`{}` \n".format(
         cmd, evaluation
     )
-    await event.edit(final_output)
+    await friday.tr_engine(event, final_output)
 
 
 async def aexec(code, event):

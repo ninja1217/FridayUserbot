@@ -44,17 +44,17 @@ async def heck(event):
         chnnl = un
     else:
         chnnl = event.chat_id
-    await event.edit(f"**Fetching All Images From This Channel**")
+    await friday.tr_engine(event, f"**Fetching All Images From This Channel**")
     try:
         chnnl_msgs = await borg.get_messages(chnnl, limit=3000, filter=InputMessagesFilterPhotos)
     except:
-        await event.edit("**Unable To fetch Messages !** \n`Please, Check Channel Details And IF There Are Any Images :/`")
+        await friday.tr_engine(event, "**Unable To fetch Messages !** \n`Please, Check Channel Details And IF There Are Any Images :/`")
         return
     total = int(chnnl_msgs.total)
-    await event.edit(f"**Downloading {total} Images**")
+    await friday.tr_engine(event, f"**Downloading {total} Images**")
     for d in chnnl_msgs:
         media_count += 1
-        await borg.download_media(d.media, dir)
+        await friday.download_media(d.media, dir)
     images_path = []
     images_names = os.listdir(dir)
     for i in images_names:
@@ -63,7 +63,7 @@ async def heck(event):
     with open('imagetopdf@fridayot.pdf', "wb") as f:
         f.write(img2pdf.convert(images_path))    
     await event.delete()    
-    await borg.send_file(event.chat_id, "imagetopdf@fridayot.pdf", caption="Powered By @FridayOT")  
+    await friday.send_file(event.chat_id, "imagetopdf@fridayot.pdf", caption="Powered By @FridayOT")  
     os.remove("imagetopdf@fridayot.pdf")
     shutil.rmtree(dir)
     
@@ -73,16 +73,16 @@ async def hmm(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("Reply to any Pdf File.")
+        await friday.tr_engine(event, "Reply to any Pdf File.")
         return
-    hmmu = await event.edit("hmm... Please Wait...🚶")
+    hmmu = await friday.tr_engine(event, "hmm... Please Wait...🚶")
     lol = await event.get_reply_message()
-    starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    hmmu = await event.edit("hmm... Please Wait..")
+    starky = await friday.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
+    hmmu = await friday.tr_engine(event, "hmm... Please Wait..")
     pdf_file = starky
     docx_file = './fridaybot/DOWNLOADS/FRIDAYOT.docx'
     parse(pdf_file, docx_file, start=0, end=None)
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id, docx_file, caption=f"*PDF Converted Into Docx by Friday bot. Get your Friday From @FRIDAYOT."
     )
     os.remove(pdf_file)

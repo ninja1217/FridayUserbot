@@ -65,7 +65,7 @@ async def _(event):
             if count > 11:
                 break
             count += 1
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Below Are Your Movie Recommendations</b></u>\n\n<b>Your Emotion:- <code>{input_str}</code>\n<b>Recommended Movie List:- </b><code>{sed}</code>",
         parse_mode="HTML",
     )

@@ -13,7 +13,7 @@ from fridaybot import CMD_HELP
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Processing ...")
+    await friday.tr_engine(event, "Processing ...")
     input_str = event.pattern_match.group(1)
     result = ""
     results = wikipedia.search(input_str)
@@ -24,7 +24,7 @@ async def _(event):
            result += f"> [{s}]({url}) \n"
         except:
            pass
-    await event.edit(
+    await friday.tr_engine(event, 
         "WikiPedia **Search**: {} \n\n **Result**: \n\n{}".format(input_str, result)
     )
 

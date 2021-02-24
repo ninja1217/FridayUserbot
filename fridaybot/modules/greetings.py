@@ -69,7 +69,7 @@ async def gm(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit("""
+    await friday.tr_engine(event, """
  
 
 ┏━━┳┓╋╋╋╋╋╋┏━━┓╋╋┏━┓
@@ -84,7 +84,7 @@ async def hi(event):
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit("""
+    await friday.tr_engine(event, """
         ｡♥️｡･ﾟ♡ﾟ･｡♥️｡･｡･｡･｡♥️｡･
     ╱╱╱╱╱╱╱╭╮╱╱╱╭╮╱╭╮╭╮
     ╭━┳━┳━┳╯┃╭━┳╋╋━┫╰┫╰╮
@@ -101,7 +101,7 @@ async def _(event):
     animation_interval = 2
     animation_ttl = range(0, 11)
 
-    await event.edit("Thanks for contacting me..\n I'm Going to leave now...")
+    await friday.tr_engine(event, "Thanks for contacting me..\n I'm Going to leave now...")
     animation_chars = [
         "**Bye  🙏\n Ending this chat 😒**",
         "**I'm leaving this chat now  🙏**",
@@ -111,7 +111,7 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 11])
+        await friday.tr_engine(event, animation_chars[i % 11])
 
 
 

@@ -18,7 +18,7 @@ async def _(event):
 
     animation_ttl = range(0, 12)
 
-    await event.edit("Police")
+    await friday.tr_engine(event, "Police")
 
     animation_chars = [
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
@@ -39,7 +39,7 @@ async def _(event):
 
         await asyncio.sleep(animation_interval)
 
-        await event.edit(animation_chars[i % 12])
+        await friday.tr_engine(event, animation_chars[i % 12])
 
 
 CMD_HELP.update(

@@ -11,7 +11,7 @@ from fridaybot.utils import register
 async def hi(event):
     if event.fwd_from:
         return
-    await event.edit("""
+    await friday.tr_engine(event, """
         ｡♥️｡･ﾟ♡ﾟ･｡♥️｡･｡･｡･｡♥️｡･
     ╱╱╱╱╱╱╱╭╮╱╱╱╭╮╱╭╮╭╮
     ╭━┳━┳━┳╯┃╭━┳╋╋━┫╰┫╰╮

@@ -39,7 +39,7 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("PLease, Reply To A Sticker / Image To Add It Your Pack")
+        await friday.tr_engine(event, "PLease, Reply To A Sticker / Image To Add It Your Pack")
         return
     if not event.is_reply:
         await moods.edit("Reply to a photo to add to my personal sticker pack.")
@@ -285,7 +285,7 @@ async def _(event):
                 emojis[document_id] += pack.emoticon
 
         async def download(sticker, emojis, path, file):
-            await borg.download_media(sticker, file=os.path.join(path, file))
+            await friday.download_media(sticker, file=os.path.join(path, file))
             with open(pack_file, "a") as f:
                 f.write(f"{{'image_file': '{file}','emojis':{emojis[sticker.id]}}},")
 
@@ -322,7 +322,7 @@ async def _(event):
         zipf = zipfile.ZipFile(directory_name + ".zip", "w", zipfile.ZIP_DEFLATED)
         zipdir(directory_name, zipf)
         zipf.close()
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             directory_name + ".zip",
             caption=file_caption,

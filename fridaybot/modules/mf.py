@@ -10,7 +10,7 @@ async def _(event):
     if event.fwd_from:
         return
     result = await borg(functions.help.GetNearestDcRequest())  # pylint:disable=E0602
-    await event.edit(result.stringify())
+    await friday.tr_engine(event, result.stringify())
 
 
 @friday.on(friday_on_cmd(pattern="config"))  # pylint:disable=E0602
@@ -20,7 +20,7 @@ async def _(event):
     result = await borg(functions.help.GetConfigRequest())  # pylint:disable=E0602
     result = result.stringify()
     logger.info(result)  # pylint:disable=E0602
-    await event.edit("""Telethon UserBot powered by @UniBorg""")
+    await friday.tr_engine(event, """Telethon UserBot powered by @UniBorg""")
 
 
 CMD_HELP.update(

@@ -60,30 +60,30 @@ async def _(event):
     id_f = event.pattern_match.group(1)
     kk = await friday.edit_or_reply(event, "`Processing...`")
     if event.is_private:
-        await kk.edit("`This Plugin Only Works In Groups!`")
+        await friday.tr_engine(event, "`This Plugin Only Works In Groups!`")
         return
     user_id = int(id_f) if id_f.isdigit() else str(id_f)
     if event.is_group:
         try:
-            await kk.edit(f"`Trying To Add {user_id} !`")
+            await friday.tr_engine(event, f"`Trying To Add {user_id} !`")
             await event.client(
                         functions.messages.AddChatUserRequest(
                             chat_id=event.chat_id, user_id=user_id, fwd_limit=0
                         )
                     )
         except Exception as e:
-            await kk.edit(f"`Failed To Add : {user_id} ! \nReason : {e}`")
+            await friday.tr_engine(event, f"`Failed To Add : {user_id} ! \nReason : {e}`")
             return
     else:
         try:
-            await kk.edit(f"`Trying To Add {user_id} !`")
+            await friday.tr_engine(event, f"`Trying To Add {user_id} !`")
             await event.client(
                         functions.channels.InviteToChannelRequest(
                             channel=event.chat_id, users=[user_id]
                         )
                     )
         except Exception as e:
-            await kk.edit(f"`Failed To Add : {user_id} ! \nReason : {e}`")
+            await friday.tr_engine(event, f"`Failed To Add : {user_id} ! \nReason : {e}`")
             return
         
 afk_cmd = str(Config.COMMAND_HAND_LER) + "afk ?(.*)"
@@ -114,16 +114,16 @@ async def _(event):
             afk_time = datetime.datetime.now()
         USER_AFK = f"yes: {reason}"
         if reason:
-            await borg.send_message(
+            await friday.send_message(
                 event.chat_id,
                 f"**My Master Seems To Be Too Busy 👀.** \n__He Going Afk Because Of__ `{reason}`",
             )
         else:
-            await borg.send_message(event.chat_id, f"**I Am Busy And I Am Going Afk**.")
+            await friday.send_message(event.chat_id, f"**I Am Busy And I Am Going Afk**.")
         await asyncio.sleep(5)
         await event.delete()
         try:
-            await borg.send_message(
+            await friday.send_message(
                 Config.PRIVATE_GROUP_ID,
                 f"#AfkLogger Afk Is Active And Reason is {reason}",
             )
@@ -143,19 +143,19 @@ async def set_not_afk(event):
         total_afk_time = str((afk_end - afk_start))
     current_message = event.message.message
     if ".afk" not in current_message and "yes" in USER_AFK:  
-        shite = await borg.send_message(
+        shite = await friday.send_message(
             event.chat_id,
             "__Pro is Back Alive__\n**No Longer afk.**\n `I Was afk for:``"
             + total_afk_time
             + "`",
         )
         try:
-            await borg.send_message(  
+            await friday.send_message(  
                 Config.PRIVATE_GROUP_ID,  
                 "#AfkLogger User is Back Alive ! No Longer Afk ",
             )
         except Exception as e:  # pylint:disable=C0103,W0703
-            await borg.send_message(  
+            await friday.send_message(  
                 event.chat_id,
                 "Please set `PRIVATE_GROUP_ID` "
                 + "for the proper functioning of afk functionality "
@@ -286,7 +286,7 @@ async def _(event):
         M = f"Fine. I have Added {input_chnnl} To DataBase."
         Ml = f"Added {input_chnnl} To DB"
         await friday.edit_or_reply(event, M)
-        await borg.send_message(loggy_grp, Ml)
+        await friday.send_message(loggy_grp, Ml)
 
 
 @friday.on(friday_on_cmd(pattern="brm ?(.*)"))
@@ -310,7 +310,7 @@ async def _(event):
     if already_added(input_chnnl):
         rm_channel(input_chnnl)
         await friday.edit_or_reply(event, f"Fine. I have Removed {input_chnnl} From DataBase.")
-        await borg.send_message(loggy_grp, f"Removed {input_chnnl} From DB")
+        await friday.send_message(loggy_grp, f"Removed {input_chnnl} From DB")
     elif not already_added(input_chnnl):
         await friday.edit_or_reply(event, 
             "Are You Sure? , You Haven't Added This Group / Channel To Database"
@@ -340,7 +340,7 @@ async def _(event):
     if hmm and hmm.media:
         for channelz in all_chnnl:
             try:
-                await borg.send_file(int(channelz.chat_id), file=hmm.media, caption=hmm.text)
+                await friday.send_file(int(channelz.chat_id), file=hmm.media, caption=hmm.text)
                 total_count += 1
             except Exception as e:
                 total_errors += 1
@@ -349,7 +349,7 @@ async def _(event):
     elif hmm and hmm.text:
         for channelz in all_chnnl:
             try:
-                await borg.send_message(int(channelz.chat_id), hmm.text)
+                await friday.send_message(int(channelz.chat_id), hmm.text)
                 total_count += 1
             except Exception as e:
                 total_errors += 1
@@ -360,7 +360,7 @@ async def _(event):
         f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}"
     )
     try:
-        await borg.send_message(
+        await friday.send_message(
             loggy_grp,
             f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}",
         )
@@ -395,7 +395,7 @@ async def _(event):
         f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}"
     )
     try:
-        await borg.send_message(
+        await friday.send_message(
             loggy_grp,
             f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}",
         )
@@ -416,7 +416,7 @@ async def _(event):
             pass
     with io.BytesIO(str.encode(chnnl_list)) as tedt_file:
         tedt_file.name = "dbchnnllist.txt"
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             tedt_file,
             force_document=True,
@@ -457,10 +457,10 @@ async def _(event):
     try:
         input_entity = await event.client.get_entity(input_str)
     except Exception:
-        await event.edit("`Hmm...`")
+        await friday.tr_engine(event, "`Hmm...`")
         return
     else:
-        await event.edit(get_restriction_string(input_entity))
+        await friday.tr_engine(event, get_restriction_string(input_entity))
 
 
 def get_restriction_string(a) -> str:
@@ -494,7 +494,7 @@ async def _(event):
     reply_message = await event.get_reply_message()
     replied_user, error_i_a = await get_full_user(event)
     if replied_user is None:
-        await event.edit(str(error_i_a))
+        await friday.tr_engine(event, str(error_i_a))
         return False
     user_id = replied_user.user.id
     profile_pic = await event.client.download_profile_photo(
@@ -517,7 +517,7 @@ async def _(event):
     # giving myself credits cause y not
     user_bio = replied_user.about
     if user_id == 1263617196:
-        await event.edit("Sorry, can't clone my Dev")
+        await friday.tr_engine(event, "Sorry, can't clone my Dev")
         await asyncio.sleep(3)
         return
     if user_bio is not None:
@@ -532,13 +532,13 @@ async def _(event):
     # message_id_to_reply = event.message.reply_to_msg_id
     # if not message_id_to_reply:
     #    message_id_to_reply = event.message.id
-    # await borg.send_message(
+    # await friday.send_message(
     #  event.chat_id,
     #  "Hey ? Whats Up !",
     #  reply_to=message_id_to_reply,
     #  )
     await event.delete()
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id, "**LET US BE AS ONE**", reply_to=reply_message
     )
 

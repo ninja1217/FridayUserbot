@@ -17,10 +17,10 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    await event.edit("Downloading to my local, for analysis 🙂......")
+    await friday.tr_engine(event, "Downloading to my local, for analysis 🙂......")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        required_file_name = await borg.download_media(
+        required_file_name = await friday.download_media(
             previous_message, Config.TMP_DOWNLOAD_DIRECTORY
         )
         lan = input_str
@@ -28,11 +28,11 @@ async def _(event):
             Config.IBM_WATSON_CRED_URL is None
             or Config.IBM_WATSON_CRED_PASSWORD is None
         ):
-            await event.edit(
+            await friday.tr_engine(event, 
                 "You need to set the required ENV variables for this module. \nModule stopping"
             )
         else:
-            await event.edit("Starting analysis, using IBM WatSon Speech To Text")
+            await friday.tr_engine(event, "Starting analysis, using IBM WatSon Speech To Text")
             headers = {
                 "Content-Type": previous_message.media.document.mime_type,
             }
@@ -65,13 +65,13 @@ async def _(event):
                     string_to_show = "Language: `{}`\nTime Taken: {} seconds\n**No Results Found**".format(
                         lan, ms
                     )
-                await event.edit(string_to_show)
+                await friday.tr_engine(event, string_to_show)
             else:
-                await event.edit(r["error"])
+                await friday.tr_engine(event, r["error"])
             # now, remove the temporary file
             os.remove(required_file_name)
     else:
-        await event.edit("Reply to a voice message, to get the relevant transcript.")
+        await friday.tr_engine(event, "Reply to a voice message, to get the relevant transcript.")
 
 
 CMD_HELP.update(

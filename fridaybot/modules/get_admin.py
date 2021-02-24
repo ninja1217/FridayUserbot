@@ -35,7 +35,7 @@ async def _(event):
         try:
             chat = await borg.get_entity(input_str)
         except Exception as e:
-            await event.edit(str(e))
+            await friday.tr_engine(event, str(e))
             return None
     try:
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):

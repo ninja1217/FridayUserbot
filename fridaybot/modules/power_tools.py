@@ -18,7 +18,7 @@ Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("**Restarted ! If You Want To Check If I am Alive, Do** `.ping` !")
+    await friday.tr_engine(event, "**Restarted ! If You Want To Check If I am Alive, Do** `.ping` !")
     try:
         herokuHelper = HerokuHelper(Config.HEROKU_APP_NAME, Config.HEROKU_API_KEY)
         herokuHelper.restart()
@@ -31,7 +31,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Turning off ...Manually turn me on later")
+    await friday.tr_engine(event, "Turning off ...Manually turn me on later")
     if Config.HEROKU_API_KEY:
         app = Heroku.app(Config.HEROKU_APP_NAME)
         app.dynos['worker.1'].kill()

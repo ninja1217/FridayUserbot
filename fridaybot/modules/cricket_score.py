@@ -31,7 +31,7 @@ async def _(event):
     Sed = ""
     for match in result:
         Sed += match.get_text() + "\n\n"
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Match information gathered successful</b></u>\n\n\n<code>{Sed}</code>",
         parse_mode="HTML",
     )

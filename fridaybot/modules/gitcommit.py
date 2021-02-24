@@ -19,10 +19,10 @@ async def download(event):
     if event.fwd_from:
         return
     if Var.GITHUB_ACCESS_TOKEN is None:
-        await event.edit("`Please ADD Proper Access Token from github.com`")
+        await friday.tr_engine(event, "`Please ADD Proper Access Token from github.com`")
         return
     if Var.GIT_REPO_NAME is None:
-        await event.edit("`Please ADD Proper Github Repo Name of your userbot`")
+        await friday.tr_engine(event, "`Please ADD Proper Github Repo Name of your userbot`")
         return
     mone = await event.reply("Processing ...")
     if not os.path.isdir(GIT_TEMP_DIR):

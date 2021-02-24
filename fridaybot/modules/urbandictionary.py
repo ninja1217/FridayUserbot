@@ -13,12 +13,12 @@ from fridaybot.utils import friday_on_cmd
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("processing...")
+    await friday.tr_engine(event, "processing...")
     str = event.pattern_match.group(1)
     try:
         mean = urbandict.define(str)
         if len(mean) > 0:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Text: **"
                 + str
                 + "**\n\nMeaning: **"
@@ -29,9 +29,9 @@ async def _(event):
                 + "__"
             )
         else:
-            await event.edit("No result found for **" + str + "**")
+            await friday.tr_engine(event, "No result found for **" + str + "**")
     except:
-        await event.edit("No result found for **" + str + "**")
+        await friday.tr_engine(event, "No result found for **" + str + "**")
 
 
 CMD_HELP.update(

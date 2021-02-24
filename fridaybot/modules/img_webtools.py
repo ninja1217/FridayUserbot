@@ -104,7 +104,7 @@ async def okgoogle(img):
         }
         paths = response.download(arguments)
         lst = paths[0][guess]
-        await event.edit(f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
+        await friday.tr_engine(event, f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
         await event.client.send_file(
             await event.client.get_input_entity(event.chat_id), lst
         )
@@ -171,7 +171,7 @@ Another Note:- Don't Use This Command continually, Yandex Will Block Your Reques
 <u><b>Reverse Search Completed By Friday.
 Get Your Own Friday From @FRIDAYCHAT.</b></u>
 """
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

@@ -14,9 +14,9 @@ async def _(event):
         event.reply_to_msg_id
         the_real_message = the_real_message.replace("*", "*")
         the_real_message = the_real_message.replace("_", "_")
-        await event.edit(the_real_message)
+        await friday.tr_engine(event, the_real_message)
     else:
-        await event.edit("Reply to a  message .copy to copy nd paste ")
+        await friday.tr_engine(event, "Reply to a  message .copy to copy nd paste ")
 
 
 CMD_HELP.update({"copy": ".c <reply to any text> " "\nc that text nd redeliver it"})

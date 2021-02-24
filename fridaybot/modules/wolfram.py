@@ -41,18 +41,18 @@ async def _(event):
         server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={i}"
         res = get(server)
         if "Wolfram Alpha did not understand" in res.text:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Sorry, Friday's AI systems couldn't recognized your question.."
             )
             return
-        await event.edit(f"**{i}**\n\n" + res.text, parse_mode="markdown")
+        await friday.tr_engine(event, f"**{i}**\n\n" + res.text, parse_mode="markdown")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        required_file_name = await borg.download_media(
+        required_file_name = await friday.download_media(
             previous_message, TEMP_DOWNLOAD_DIRECTORY
         )
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
-            await event.edit(
+            await friday.tr_engine(event, 
                 "You need to set the required ENV variables for this module. \nModule stopping"
             )
         else:
@@ -92,7 +92,7 @@ async def _(event):
                     except gTTSError:
                         return
                     with open("results.mp3", "r"):
-                        await borg.send_file(
+                        await friday.send_file(
                             event.chat_id,
                             "results.mp3",
                             voice_note=True,
@@ -116,7 +116,7 @@ async def _(event):
                     except gTTSError:
                         return
                     with open("results.mp3", "r"):
-                        await borg.send_file(
+                        await friday.send_file(
                             event.chat_id,
                             "results.mp3",
                             voice_note=True,
@@ -125,7 +125,7 @@ async def _(event):
                     os.remove("results.mp3")
                     os.remove(required_file_name)
             else:
-                await event.edit("API Failure !")
+                await friday.tr_engine(event, "API Failure !")
                 os.remove(required_file_name)
 
                 

@@ -88,6 +88,6 @@ async def g_download(event):
     drive_link = event.text[4:]
     print("Drive Link: " + drive_link)
     file_id = await get_id(drive_link)
-    await event.edit("Downloading Requested File from G-Drive...")
+    await friday.tr_engine(event, "Downloading Requested File from G-Drive...")
     file_name = await download_file_from_google_drive(file_id)
-    await event.edit("File Downloaded.\nName: `" + str(file_name) + "`")
+    await friday.tr_engine(event, "File Downloaded.\nName: `" + str(file_name) + "`")

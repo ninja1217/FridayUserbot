@@ -26,7 +26,7 @@ async def _(event):
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await event.edit("Invalid Syntax. Module stopping.")
+        await friday.tr_engine(event, "Invalid Syntax. Module stopping.")
         return
     text = text.strip()
     lan = lan.strip()
@@ -56,14 +56,14 @@ async def _(event):
                 command_to_execute, stderr=subprocess.STDOUT
             )
         except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
-            await event.edit(str(exc))
+            await friday.tr_engine(event, str(exc))
             # continue sending required_file_name
         else:
             os.remove(required_file_name)
             required_file_name = required_file_name + ".opus"
         end = datetime.now()
         ms = (end - start).seconds
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             required_file_name,
             # caption="Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms),
@@ -72,11 +72,11 @@ async def _(event):
             voice_note=True,
         )
         os.remove(required_file_name)
-        await event.edit("Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms))
+        await friday.tr_engine(event, "Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms))
         await asyncio.sleep(5)
         await event.delete()
     except Exception as e:
-        await event.edit(str(e))
+        await friday.tr_engine(event, str(e))
 
 
 CMD_HELP.update(

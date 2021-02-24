@@ -73,7 +73,7 @@ async def get_user_sender_id(user, event):
     try:
         user_obj = await event.client.get_entity(user)
     except (TypeError, ValueError) as err:
-        await event.edit(str(err))
+        await friday.tr_engine(event, str(err))
         return None
 
     return user_obj
@@ -302,7 +302,7 @@ async def who(event: NewMessage.Event):
     replied_user = await get_user_from_event(event, **args)
 
     if not replied_user:
-        await event.edit("**Failed to get information for user**")
+        await friday.tr_engine(event, "**Failed to get information for user**")
         return
 
     user_info = await fetch_info(replied_user, **args)
@@ -312,7 +312,7 @@ async def who(event: NewMessage.Event):
     if not message_id_to_reply:
         pass
 
-    await event.edit(str(user_info), parse_mode="markdown")
+    await friday.tr_engine(event, str(user_info), parse_mode="markdown")
 
 
 async def fetch_info(replied_user, **kwargs):

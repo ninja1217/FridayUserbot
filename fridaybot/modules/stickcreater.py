@@ -35,7 +35,7 @@ async def sticklet(event):
         reply_message = await event.get_reply_message()
         sticktext = reply_message.message
     elif not sticktext:
-        await event.edit("need something, hmm")
+        await friday.tr_engine(event, "need something, hmm")
         return
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
@@ -92,7 +92,7 @@ async def sticklet(event):
         reply_message = await event.get_reply_message()
         sticktext = reply_message.message
     elif not sticktext:
-        await event.edit("need something, hmm")
+        await friday.tr_engine(event, "need something, hmm")
         return
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()

@@ -55,10 +55,10 @@ async def deepfryer(event):
     if event.is_reply:
         image_s = await convert_to_image(event, borg)
     else:
-        await event.edit("`Reply to an image or sticker to deep fry it!`")
+        await friday.tr_engine(event, "`Reply to an image or sticker to deep fry it!`")
         return
     image = Image.open(image_s)
-    await event.edit("`Now, Deep frying media…`")
+    await friday.tr_engine(event, "`Now, Deep frying media…`")
     for _ in range(frycount):
         image = await deepfry(image)
     image.save("./starkgangz/fried.png")

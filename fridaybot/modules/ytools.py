@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -87,7 +87,7 @@ async def _(event):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(mo, download=True)
     except Exception as e:
-        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await friday.tr_engine(event, event, f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     await asyncio.sleep(20)
     c_time = time.time()
@@ -104,7 +104,7 @@ async def _(event):
         )
     capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         lol_m,
         force_document=False,
@@ -163,7 +163,7 @@ async def _(event):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
-        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await friday.tr_engine(event, event, f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
@@ -179,7 +179,7 @@ async def _(event):
         )
     capy = f"**Video Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         lol_m,
         force_document=False,
@@ -244,7 +244,7 @@ async def _(event):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except Exception as e:
-        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await friday.tr_engine(event, event, f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     await asyncio.sleep(20)
     c_time = time.time()
@@ -261,7 +261,7 @@ async def _(event):
         )
     capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await event.delete()
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id,
         lol_m,
         force_document=False,

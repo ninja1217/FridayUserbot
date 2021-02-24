@@ -20,9 +20,9 @@ async def _(event):
     sample_url = "https://da.gd/dns/{}".format(input_str)
     response_api = requests.get(sample_url).text
     if response_api:
-        await starky.edit("DNS records of {} are \n{}".format(input_str, response_api))
+        await friday.tr_engine(event, "DNS records of {} are \n{}".format(input_str, response_api))
     else:
-        await starky.edit("i can't seem to find {} on the internet".format(input_str))
+        await friday.tr_engine(event, "i can't seem to find {} on the internet".format(input_str))
 
 
 @friday.on(friday_on_cmd("url (.*)"))

@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun Km 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -47,7 +47,7 @@ async def _(event):
         titles = item["title"]
         sed1 = img
         sedm = f"**Title : {titles}** \n{sedlyf} \nDate : {dateis} \nAuthor : {writter} \nReadMore : {readthis}"
-        await borg.send_file(newslog, sed1, caption=sedm)
+        await friday.send_file(newslog, sed1, caption=sedm)
 
 
 CMD_HELP.update(

@@ -121,7 +121,7 @@ async def sch(event):
     if event.fwd_from:
         return
     if CLIENT_ID is None or CLIENT_SECRET is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "This module requires credentials from https://da.gd/so63O. Aborting!"
         )
         return False
@@ -142,7 +142,7 @@ async def sch(event):
         # Authorize, get file parameters, upload file and print out result URL for download
     http = authorize(G_DRIVE_TOKEN_FILE, None)
     input_str = event.pattern_match.group(1).strip()
-    await event.edit("Searching for {} in G-Drive.".format(input_str))
+    await friday.tr_engine(event, "Searching for {} in G-Drive.".format(input_str))
     if parent_id is not None:
         query = "'{}' in parents and (title contains '{}')".format(parent_id, input_str)
     else:
@@ -151,7 +151,7 @@ async def sch(event):
         parent_id, input_str
     )  # search_query(parent_id,input_str)
     msg = await gsearch(http, query, input_str)
-    await event.edit(str(msg))
+    await friday.tr_engine(event, str(msg))
 
 
 async def gsearch(http, query, filename):
@@ -197,12 +197,12 @@ async def _(event):
     if event.fwd_from:
         return
     if CLIENT_ID is None or CLIENT_SECRET is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "This module requires credentials from https://da.gd/so63O. Aborting!"
         )
         return
     if Config.PRIVATE_GROUP_ID is None:
-        await event.edit(
+        await friday.tr_engine(event, 
             "Please set the required environment variable `PRIVATE_GROUP_ID` for this plugin to work"
         )
         return
@@ -228,17 +228,17 @@ async def _(event):
         )
         # Authorize, get file parameters, upload file and print out result URL for download
         # first, create a sub-directory
-        await event.edit("Uploading `{}` to G-Drive...".format(input_str))
+        await friday.tr_engine(event, "Uploading `{}` to G-Drive...".format(input_str))
         dir_id = await create_directory(
             http, os.path.basename(os.path.abspath(input_str)), parent_id
         )
         await DoTeskWithDir(http, input_str, event, dir_id)
         dir_link = "https://drive.google.com/folderview?id={}".format(dir_id)
-        await event.edit(
+        await friday.tr_engine(event, 
             f"__Successfully Uploaded Folder To G-Drive...__\n[{input_str}]({dir_link})"
         )
     else:
-        await event.edit(f"directory {input_str} does not seem to exist")
+        await friday.tr_engine(event, f"directory {input_str} does not seem to exist")
 
 
 async def create_directory(http, directory_name, parent_id):
@@ -357,7 +357,7 @@ async def upload_file(http, file_path, file_name, mime_type, event, parent_id):
             )
             if display_message != current_message:
                 try:
-                    await event.edit(current_message)
+                    await friday.tr_engine(event, current_message)
                     display_message = current_message
                 except Exception as e:
                     logger.info(str(e))
@@ -376,4 +376,4 @@ async def _(event):
     if event.fwd_from:
         return
     folder_link = "https://drive.google.com/folderview?id=" + parent_id
-    await event.edit("`Here is Your G-Drive Folder link : `\n" + folder_link)
+    await friday.tr_engine(event, "`Here is Your G-Drive Folder link : `\n" + folder_link)

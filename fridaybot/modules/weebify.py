@@ -75,14 +75,14 @@ async def weebify(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await event.edit("`What I am Supposed to Weebify U Dumb`")
+        await friday.tr_engine(event, "`What I am Supposed to Weebify U Dumb`")
         return
     string = "  ".join(args).lower()
     for normiecharacter in string:
         if normiecharacter in normiefont:
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
-    await event.edit(string)
+    await friday.tr_engine(event, string)
 
 
 CMD_HELP.update(

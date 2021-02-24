@@ -18,7 +18,7 @@ async def timer_blankx(e):
 
     for j in range(j):
 
-        await e.edit(txt + str(k))
+        await friday.tr_engine(event, txt + str(k))
 
         k = k - 50
 
@@ -30,7 +30,7 @@ async def timer_blankx(e):
 
     else:
 
-        await e.edit(txt + "NaN")
+        await friday.tr_engine(event, txt + "NaN")
 
 
 @friday.on(friday_on_cmd(pattern="(f?s)cd "))
@@ -45,7 +45,7 @@ async def timer_blankx(e):
 
     for j in range(j):
 
-        await e.edit(txt + str(k))
+        await friday.tr_engine(event, txt + str(k))
 
         k = k - 1
 
@@ -57,7 +57,7 @@ async def timer_blankx(e):
 
     else:
 
-        await e.edit(txt + "NaN")
+        await friday.tr_engine(event, txt + "NaN")
 
 
 @friday.on(admin_cmd(pattern="(f?p)an"))
@@ -72,7 +72,7 @@ async def timer_blankx(e):
 
     for j in range(j):
 
-        await e.edit(txt + str(k))
+        await friday.tr_engine(event, txt + str(k))
 
         k = k - 1
 
@@ -80,4 +80,4 @@ async def timer_blankx(e):
 
     if e.pattern_match.group(1) == "f":
 
-        await e.edit("`Successfully Promoted As Admin.` ")
+        await friday.tr_engine(event, "`Successfully Promoted As Admin.` ")

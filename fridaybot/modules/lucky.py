@@ -28,7 +28,7 @@ async def _(event):
 
     # if input_str == "lucky":
 
-    await event.edit("Lucky..")
+    await friday.tr_engine(event, "Lucky..")
 
     animation_chars = [
         "⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜[🎁](https://github.com/midhunkm1294-bit/friday/)⬜",
@@ -54,7 +54,7 @@ async def _(event):
 
         await asyncio.sleep(animation_interval)
 
-        await event.edit(animation_chars[i % 17])
+        await friday.tr_engine(event, animation_chars[i % 17])
 
 
 CMD_HELP.update(

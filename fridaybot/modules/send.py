@@ -23,7 +23,7 @@ async def send(event):
     (end - start).seconds
     men = f"**Plugin Name :** `{input_str}` \n**This Plugin is Part Of Friday, Please Read License Before Using In Your Projects.**"
     if not os.path.exists(the_plugin_file):
-        await event.edit(f"__No Plugin Match Found For__ **{input_str}**")
+        await friday.tr_engine(event, f"__No Plugin Match Found For__ **{input_str}**")
         return
     await event.client.send_file(  # pylint:disable=E0602
         event.chat_id,

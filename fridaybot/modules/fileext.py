@@ -11,7 +11,7 @@ from fridaybot import CMD_HELP
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Processing ...")
+    await friday.tr_engine(event, "Processing ...")
     sample_url = "https://www.fileext.com/file-extension/{}.html"
     input_str = event.pattern_match.group(1).lower()
     response_api = requests.get(sample_url.format(input_str))
@@ -20,13 +20,13 @@ async def _(event):
         raw_html = response_api.content
         soup = BeautifulSoup(raw_html, "html.parser")
         ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
-        await event.edit(
+        await friday.tr_engine(event, 
             "**File Extension**: `{}`\n**Description**: `{}`".format(
                 input_str, ext_details
             )
         )
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             "https://www.fileext.com/ responded with {} for query: {}".format(
                 status_code, input_str
             )

@@ -42,7 +42,7 @@ async def _(event):
     if len(reply) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(reply)) as out_file:
             out_file.name = "lyrics.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,

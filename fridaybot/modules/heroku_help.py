@@ -21,7 +21,7 @@ async def giblog(event):
     logz = herokuHelper.getLog()
     with open("logs.txt", "w") as log:
         log.write(logz)
-    await borg.send_file(
+    await friday.send_file(
         event.chat_id, "logs.txt", caption=f"**Logs Of {Config.HEROKU_APP_NAME}**"
     )
 
@@ -193,10 +193,10 @@ async def lel(event):
     if event.fwd_from:
         return
     cpass, npass = event.pattern_match.group(1).split(" ", 1)
-    await event.edit("`Changing You Pass`")
+    await friday.tr_engine(event, "`Changing You Pass`")
     accountm = Heroku.account()
     accountm.change_password(cpass, npass)
-    await event.edit(f"`Done !, Changed You Pass to {npass}")
+    await friday.tr_engine(event, f"`Done !, Changed You Pass to {npass}")
 
 
 @friday.on(friday_on_cmd(pattern="acolb (.*)"))
@@ -206,7 +206,7 @@ async def sf(event):
     hmm = event.pattern_match.group(1)
     app = Heroku.app(Config.HEROKU_APP_NAME)
     collaborator = app.add_collaborator(user_id_or_email=hmm, silent=0)
-    await event.edit("`Sent Invitation To Accept Your Collab`")
+    await friday.tr_engine(event, "`Sent Invitation To Accept Your Collab`")
 
 
 @friday.on(friday_on_cmd(pattern="tfa (.*)"))
@@ -223,7 +223,7 @@ async def killdyno(event):
     if event.fwd_from:
         return
     app = Heroku.app(Config.HEROKU_APP_NAME)
-    await event.edit("`Dyno Is Off. Manually Turn it On Later`")
+    await friday.tr_engine(event, "`Dyno Is Off. Manually Turn it On Later`")
     app.kill_dyno("worker.1")
 
 

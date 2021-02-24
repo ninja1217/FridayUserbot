@@ -53,7 +53,7 @@ async def _(event):
     file.write("---------------------------------\n")
     file.write("\n")
     file.close
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Password Saved Successfully</b></u>",
         parse_mode="HTML",
     )
@@ -66,7 +66,7 @@ async def hi(event):
     file = open("./chsaiujwal/info.pablo", "r")
     content = file.read()
     file.close()
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Here are your Saved Passwords</u></b>\n<code>{content}</code>",
         parse_mode="HTML",
     )

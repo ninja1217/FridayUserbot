@@ -53,7 +53,7 @@ async def _(event):
 <u>By Friday bot.
 Get Your Fridaybot From @FRIDAYOT</u></b>
 """
-      await borg.send_message(
+      await friday.send_message(
         event.chat_id,
         Escobar,
         parse_mode="HTML",

@@ -56,7 +56,7 @@ Detailed link:- {urlo}
 Get Your Own Friday From @FRIDAYCHAT.</b></u>
 
 """
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

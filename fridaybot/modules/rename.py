@@ -21,7 +21,7 @@ async def _(event):
     thumb = None
     if os.path.exists(thumb_image_path):
         thumb = thumb_image_path
-    await event.edit("⚡️`Rename and upload in progress, please wait!`⚡️")
+    await friday.tr_engine(event, "⚡️`Rename and upload in progress, please wait!`⚡️")
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -32,14 +32,14 @@ async def _(event):
         reply_message = await event.get_reply_message()
         to_download_directory = Config.TMP_DOWNLOAD_DIRECTORY
         downloaded_file_name = os.path.join(to_download_directory, file_name)
-        downloaded_file_name = await borg.download_media(
+        downloaded_file_name = await friday.download_media(
             reply_message,
             downloaded_file_name,
         )
         ms_one = (end - start).seconds
         if os.path.exists(downloaded_file_name):
             time.time()
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 downloaded_file_name,
                 force_document=True,
@@ -51,15 +51,15 @@ async def _(event):
             end_two = datetime.now()
             os.remove(downloaded_file_name)
             ms_two = (end_two - end).seconds
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Downloaded in {} seconds. Uploaded in {} seconds.".format(
                     ms_one, ms_two
                 )
             )
         else:
-            await event.edit("File Not Found {}".format(input_str))
+            await friday.tr_engine(event, "File Not Found {}".format(input_str))
     else:
-        await event.edit("Syntax // .rnupload file.name as reply to a Telegram media")
+        await friday.tr_engine(event, "Syntax // .rnupload file.name as reply to a Telegram media")
 
 
 CMD_HELP.update(

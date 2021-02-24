@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -52,30 +52,30 @@ async def gbun(event):
         return
     o = await all_pro_s(Config, client2, client3, client4)
     stime = time.time()
-    await event.edit("**GBanning This User !**")
+    await friday.tr_engine(event, "**GBanning This User !**")
     sucess = 0
     bad = 0
     user, reason = await get_user_from_event(event)
     if not user:
-        await event.edit("`Kindly, Mention A User To Gban`")
+        await friday.tr_engine(event, "`Kindly, Mention A User To Gban`")
         return
     if not reason or reason is None:
         hmm_r = "#GBanned"
     elif reason:
         hmm_r = reason
     if user.id in o:
-        await event.edit("**I Can't Gban You Master / Sudo Users :(**")
+        await friday.tr_engine(event, "**I Can't Gban You Master / Sudo Users :(**")
         return
     if gban_sql.is_gbanned(user.id):
-        await event.edit("**This User Is Already Gbanned. No Point In Gbanning Him Again ! :/**")
+        await friday.tr_engine(event, "**This User Is Already Gbanned. No Point In Gbanning Him Again ! :/**")
         return
     gban_sql.gban_user(user.id, hmm_r)
     chat_s = await get_all_admin_chats(event)
     if len(chat_s) == 0:
-        await event.edit("**You Need To Be Admin In Atleast 1 Group To Perform this Action !**")
+        await friday.tr_engine(event, "**You Need To Be Admin In Atleast 1 Group To Perform this Action !**")
         return
     len_s = len(chat_s)
-    await event.edit(f"**Trying To GBan !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
+    await friday.tr_engine(event, f"**Trying To GBan !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
         try:
           await event.client.edit_permissions(stark_s, user.id, view_messages=False)
@@ -84,7 +84,7 @@ async def gbun(event):
           bad += 0
     etime = time.time()
     hmm_time = round(etime-stime)
-    await event.edit(f"**GBanned Successfully !** \n\n"
+    await friday.tr_engine(event, f"**GBanned Successfully !** \n\n"
                      f"**User :** [{user.first_name}](tg://user?id={user.id}) \n"
                      f"**Affected Chats :** `{sucess}` \n"
                      f"**Time Taken :** `{hmm_time}` \n"
@@ -95,28 +95,28 @@ async def gbun(event):
 async def ungbun(event):
     if event.fwd_from:
         return
-    await event.edit("**Un-GBanning User**")
+    await friday.tr_engine(event, "**Un-GBanning User**")
     sucess = 0
     bad = 0
     o = await all_pro_s(Config, client2, client3, client4)
     stime = time.time()
     user, reason = await get_user_from_event(event)
     if not user.id:
-        await event.edit("`Mention A User To Un-Gban`")
+        await friday.tr_engine(event, "`Mention A User To Un-Gban`")
         return
     if user.id in o:
-        await event.edit("**I Can't Un-Gban You Master :(**")
+        await friday.tr_engine(event, "**I Can't Un-Gban You Master :(**")
         return
     if not gban_sql.is_gbanned(user.id):
-        await event.edit("**This User Is Not Gbanned. No Point In Un-Gbanning !**")
+        await friday.tr_engine(event, "**This User Is Not Gbanned. No Point In Un-Gbanning !**")
         return
     gban_sql.ungban_user(user.id)
     chat_s = await get_all_admin_chats(event)
     if len(chat_s) == 0:
-        await event.edit("**You Need To Be Admin In Atleast 1 Group To Perform this Action**")
+        await friday.tr_engine(event, "**You Need To Be Admin In Atleast 1 Group To Perform this Action**")
         return
     len_s = len(chat_s)
-    await event.edit(f"**Un-GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
+    await friday.tr_engine(event, f"**Un-GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
         try:
           await event.client.edit_permissions(stark_s, user.id, view_messages=True)
@@ -125,7 +125,7 @@ async def ungbun(event):
           bad += 0
     etime = time.time()
     hmm_time = round(etime-stime)
-    await event.edit(f"**Un-GBanned Successfully !** \n\n"
+    await friday.tr_engine(event, f"**Un-GBanned Successfully !** \n\n"
                      f"**User :** [{user.first_name}](tg://user?id={user.id}) \n"
                      f"**Affected Chats :** `{sucess}` \n"
                      f"**Time Taken :** `{hmm_time}`")
@@ -169,7 +169,7 @@ async def get_user_from_event(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.edit("`Pass the User's Username, ID or Reply!`")
+            await friday.tr_engine(event, "`Pass the User's Username, ID or Reply!`")
             return None, None
         if event.message.entities:
             probable_user_mention_entity = event.message.entities[0]
@@ -190,7 +190,7 @@ async def get_user_sender_id(user, event):
     try:
         user_obj = await event.client.get_entity(user)
     except (TypeError, ValueError) as err:
-        await event.edit(str(err))
+        await friday.tr_engine(event, str(err))
         return None
 
     return user_obj
@@ -205,7 +205,7 @@ async def startgmute(event):
     if event.fwd_from:
         return
     elif event.is_private:
-        await event.edit("Unexpected issues or ugly errors may occur!")
+        await friday.tr_engine(event, "Unexpected issues or ugly errors may occur!")
         await asyncio.sleep(3)
         private = True
     reply = await event.get_reply_message()
@@ -216,19 +216,19 @@ async def startgmute(event):
     elif private is True:
         userid = event.chat_id
     else:
-        return await event.edit(
+        return await friday.tr_engine(event, 
             "Please reply to a user or add their into the command to gmute them."
         )
     event.chat_id
     await event.get_chat()
     if is_muted(userid, "gmute"):
-        return await event.edit("`He has Tap Already On His Mouth.`")
+        return await friday.tr_engine(event, "`He has Tap Already On His Mouth.`")
     try:
         mute(userid, "gmute")
     except Exception as e:
-        await event.edit("Error occured!\nError is " + str(e))
+        await friday.tr_engine(event, "Error occured!\nError is " + str(e))
     else:
-        await event.edit("Here A Tape, Now Shutup \nGmuteD")
+        await friday.tr_engine(event, "Here A Tape, Now Shutup \nGmuteD")
 
 
 @friday.on(friday_on_cmd(pattern=r"ungmute ?(\d+)?"))
@@ -239,7 +239,7 @@ async def endgmute(event):
     if event.fwd_from:
         return
     elif event.is_private:
-        await event.edit("Unexpected issues or ugly errors may occur!")
+        await friday.tr_engine(event, "Unexpected issues or ugly errors may occur!")
         await asyncio.sleep(3)
         private = True
     reply = await event.get_reply_message()
@@ -250,18 +250,18 @@ async def endgmute(event):
     elif private is True:
         userid = event.chat_id
     else:
-        return await event.edit(
+        return await friday.tr_engine(event, 
             "Please reply to a user or add their into the command to ungmute them."
         )
     event.chat_id
     if not is_muted(userid, "gmute"):
-        return await event.edit("This user is not gmuted")
+        return await friday.tr_engine(event, "This user is not gmuted")
     try:
         unmute(userid, "gmute")
     except Exception as e:
-        await event.edit("Error occured!\nError is " + str(e))
+        await friday.tr_engine(event, "Error occured!\nError is " + str(e))
     else:
-        await event.edit("Successfully ungmuted that person")
+        await friday.tr_engine(event, "Successfully ungmuted that person")
 
 
 @command(incoming=True)

@@ -34,7 +34,7 @@ async def lst(event):
         out = "filesList.txt"
         with open(out, "w") as f:
             f.write(f)
-        await borg.send_file(
+        await friday.send_file(
             event.chat_id,
             out,
             force_document=True,

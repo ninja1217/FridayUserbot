@@ -23,7 +23,7 @@ async def _(event):
         return
     
     if Config.FOOTBALL_API_KEY is None:
-      await event.edit("Need to get an API key from https://rapidapi.com/api-sports/api/api-football-beta\nModule stopping!")
+      await friday.tr_engine(event, "Need to get an API key from https://rapidapi.com/api-sports/api/api-football-beta\nModule stopping!")
       return
     
     appo = Config.FOOTBALL_API_KEY
@@ -140,7 +140,7 @@ Draw:- {yqw4}
 Lose:- {pol4}</b>
 """
 
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",
@@ -156,7 +156,7 @@ async def _(event):
         return
     
     if Config.FOOTBALL_API_KEY is None:
-      await event.edit("Need to get an API key from https://rapidapi.com/api-sports/api/api-football-beta\nModule stopping!")
+      await friday.tr_engine(event, "Need to get an API key from https://rapidapi.com/api-sports/api/api-football-beta\nModule stopping!")
       return
     
     appo = Config.FOOTBALL_API_KEY
@@ -273,7 +273,7 @@ Draw:- {yqw4}
 Lose:- {pol4}</b>
 """
 
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",
@@ -289,7 +289,7 @@ async def _(event):
         return
     
     if Config.FOOTBALL_API_KEY is None:
-      await event.edit("Need to get an API key from https://rapidapi.com/api-sports/api/api-football-beta\nModule stopping!")
+      await friday.tr_engine(event, "Need to get an API key from https://rapidapi.com/api-sports/api/api-football-beta\nModule stopping!")
       return
     
     appo = Config.FOOTBALL_API_KEY
@@ -388,7 +388,7 @@ Draw:- {yqw3}
 Lose:- {pol3}
 """
 
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
         parse_mode="HTML",

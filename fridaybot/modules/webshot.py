@@ -19,13 +19,13 @@ async def _(event):
 
     if Config.SCREEN_SHOT_LAYER_ACCESS_KEY is None:
 
-        await event.edit(
+        await friday.tr_engine(event, 
             "Need to get an API key from https://screenshotlayer.com/product \nModule stopping!"
         )
 
         return
 
-    await event.edit("Processing ...")
+    await friday.tr_engine(event, "Processing ...")
 
     sample_url = "https://api.screenshotlayer.com/api/capture?access_key={}&url={}&fullpage={}&viewport={}&format={}&force={}"
 
@@ -49,7 +49,7 @@ async def _(event):
 
             try:
 
-                await borg.send_file(
+                await friday.send_file(
                     event.chat_id,
                     screenshot_image,
                     caption=input_str,
@@ -61,11 +61,11 @@ async def _(event):
 
             except Exception as e:
 
-                await event.edit(str(e))
+                await friday.tr_engine(event, str(e))
 
     else:
 
-        await event.edit(response_api.text)
+        await friday.tr_engine(event, response_api.text)
 
 
 CMD_HELP.update(

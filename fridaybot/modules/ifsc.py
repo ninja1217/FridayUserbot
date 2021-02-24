@@ -38,7 +38,7 @@ async def _(event):
     g = data["BANKCODE"]
     h = data["IFSC"]
 
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>INFORMATION GATHERED SUCCESSFULLY</b></u>\n\n<b>Bank Name :-</b><code>{f}</code>\n<b>Bank Address:- </b> <code>{a}</code>\n<b>Centre :-</b><code>{b}</code>\n<b>Branch :- </b><code>{c}</code>\n<b> City :-</b><code>{d}</code>\n<b>State:- </b> <code>{e}</code>\n<b>Bank Code :- </b><code>{g}</code>\n<b>Ifsc :-</b><code>{h}</code>",
         parse_mode="HTML",
     )

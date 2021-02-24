@@ -43,7 +43,7 @@ async def _(event):
     e = result["zip"]
     f = result["latitude"]
     g = result["longitude"]
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>INFORMATION GATHERED SUCCESSFULLY</b></u>\n\n<b>Ip type :-</b><code>{a}</code>\n<b>Country code:- </b> <code>{b}</code>\n<b>State name :-</b><code>{c}</code>\n<b>City name :- </b><code>{d}</code>\n<b>zip :-</b><code>{e}</code>\n<b>Latitude:- </b> <code>{f}</code>\n<b>Longitude :- </b><code>{g}</code>\n",
         parse_mode="HTML",
     )

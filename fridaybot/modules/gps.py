@@ -33,8 +33,8 @@ async def gps(event):
         reply_to_id = await event.get_reply_message()
     address = event.pattern_match.group(1)
     if not address:
-        return await starkislub.edit("`Give Input Location.`")
-    await starkislub.edit("`Searching..`")
+        return await friday.tr_engine(event, "`Give Input Location.`")
+    await friday.tr_engine(event, "`Searching..`")
     url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
     response = requests.get(url).json()
     try:
@@ -45,7 +45,7 @@ async def gps(event):
         )
         await event.delete()
     except:
-        await starkislub.edit("Location not found. Please try giving input with country.")
+        await friday.tr_engine(event, "Location not found. Please try giving input with country.")
 
 
 CMD_HELP.update(

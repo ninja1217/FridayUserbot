@@ -33,62 +33,62 @@ if Config.LYDIA_API_KEY:
 async def repcf(event):
     if event.fwd_from:
         return
-    await event.edit("Processing...")
+    await friday.tr_engine(event, "Processing...")
     try:
         session = lydia.create_session()
         session_id = session.id
         reply = await event.get_reply_message()
         msg = reply.text
         text_rep = session.think_thought((session_id, msg))
-        await event.edit("💫 {0}".format(text_rep))
+        await friday.tr_engine(event, "💫 {0}".format(text_rep))
     except Exception as e:
-        await event.edit(str(e))
+        await friday.tr_engine(event, str(e))
 
 
 @borg.on(admin_cmd(pattern='addcf$'))
 async def addcf(event):
     if event.fwd_from:
         return
-    await event.edit("Running on Non-SQL mode for now...")
+    await friday.tr_engine(event, "Running on Non-SQL mode for now...")
     await asyncio.sleep(3)
-    await event.edit("Processing...")
+    await friday.tr_engine(event, "Processing...")
     reply_msg = await event.get_reply_message()
     if reply_msg:
         session = lydia.create_session()
         session_id = session.id
         if reply_msg.sender_id is None:
-            return await event.edit("Invalid user type.")
+            return await friday.tr_engine(event, "Invalid user type.")
         ACC_LYDIA.update({str(event.chat_id) + " " + str(reply_msg.sender_id): session})
         SESSION_ID.update(
             {str(event.chat_id) + " " + str(reply_msg.sender_id): session_id}
         )
-        await event.edit(
+        await friday.tr_engine(event, 
             "Lydia successfully (re)enabled for user: {} in chat: {}".format(
                 str(reply_msg.sender_id), str(event.chat_id)
             )
         )
     else:
-        await event.edit("Reply to a user to activate Lydia AI on them")
+        await friday.tr_engine(event, "Reply to a user to activate Lydia AI on them")
 
 
 @borg.on(admin_cmd(pattern='remcf$'))
 async def remcf(event):
     if event.fwd_from:
         return
-    await event.edit("Running on Non-SQL mode for now...")
+    await friday.tr_engine(event, "Running on Non-SQL mode for now...")
     await asyncio.sleep(3)
-    await event.edit("Processing...")
+    await friday.tr_engine(event, "Processing...")
     reply_msg = await event.get_reply_message()
     try:
         del ACC_LYDIA[str(event.chat_id) + " " + str(reply_msg.sender_id)]
         del SESSION_ID[str(event.chat_id) + " " + str(reply_msg.sender_id)]
-        await event.edit(
+        await friday.tr_engine(event, 
             "Lydia successfully disabled for user: {} in chat: {}".format(
                 str(reply_msg.sender_id), str(event.chat_id)
             )
         )
     except Exception:
-        await event.edit("This person does not have Lydia activated on him/her.")
+        await friday.tr_engine(event, "This person does not have Lydia activated on him/her.")
 
 
 @bot.on(events.NewMessage(incoming=True))

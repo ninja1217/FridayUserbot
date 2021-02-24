@@ -7,7 +7,7 @@ from fridaybot.utils import friday_on_cmd
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Processing ...")
+    await friday.tr_engine(event, "Processing ...")
     cmd = event.text.split(" ", maxsplit=1)[1]
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
@@ -42,7 +42,7 @@ async def _(event):
     if len(final_output) > 4096:
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.text"
-            await bot.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -52,7 +52,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await event.edit(final_output)
+        await friday.tr_engine(event, final_output)
 
 
 async def aexec(code, event):

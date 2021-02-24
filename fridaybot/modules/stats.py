@@ -35,7 +35,7 @@ async def _(event):
             print(d)
     end = datetime.now()
     ms = (end - start).seconds
-    await event.edit(
+    await friday.tr_engine(event, 
         """`Your Stats Obtained in {} seconds`
 `You have {} Private Messages`
 `You are in {} Groups`

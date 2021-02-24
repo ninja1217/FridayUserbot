@@ -7,7 +7,7 @@ from fridaybot import CMD_HELP
 async def test(event):
     if event.fwd_from:
         return
-    await event.edit("Test Successfull. Boss !")
+    await friday.tr_engine(event, "Test Successfull. Boss !")
 
 
 CMD_HELP.update(

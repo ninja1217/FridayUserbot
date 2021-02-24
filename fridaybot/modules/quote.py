@@ -29,7 +29,7 @@ async def _(event):
     for quotes in result:
         sed += str(quotes["quote"]) + "\n\n"
 
-    await event.edit(
+    await friday.tr_engine(event, 
         f"<b><u>Quotes Successfully Gathered for given word </b></u><code>{input_str}</code>\n\n\n<code>{sed}</code>",
         parse_mode="HTML",
     )

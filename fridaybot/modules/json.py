@@ -22,7 +22,7 @@ async def _(event):
     if len(the_real_message) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(the_real_message)) as out_file:
             out_file.name = "json.text"
-            await borg.send_file(
+            await friday.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -31,7 +31,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await event.edit("`{}`".format(the_real_message))
+        await friday.tr_engine(event, "`{}`".format(the_real_message))
 
 
 CMD_HELP.update(

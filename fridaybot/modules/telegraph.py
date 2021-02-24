@@ -30,14 +30,14 @@ async def _(event):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if BOTLOG:
         try:
-            await borg.send_message(
+            await friday.send_message(
                 Config.PRIVATE_GROUP_ID,
                 "Created New Telegraph account {} for the current session. \n**Do not give this url to anyone, even if they say they are from Telegram!**".format(
                     auth_url
                 ),
             )
         except:
-            await borg.send_message(
+            await friday.send_message(
                 bot.uid,
                 "Created New Telegraph account {} for the current session. \n**Do not give this url to anyone, even if they say they are from Telegram!**".format(
                     auth_url
@@ -49,12 +49,12 @@ async def _(event):
         r_message = await event.get_reply_message()
         input_str = event.pattern_match.group(1)
         if input_str == "media":
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await friday.download_media(
                 r_message, Config.TMP_DOWNLOAD_DIRECTORY
             )
             end = datetime.now()
             ms = (end - start).seconds
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Downloaded to {} in {} seconds.".format(downloaded_file_name, ms)
             )
             if downloaded_file_name.endswith((".webp")):
@@ -63,13 +63,13 @@ async def _(event):
                 start = datetime.now()
                 media_urls = upload_file(downloaded_file_name)
             except exceptions.TelegraphException as exc:
-                await event.edit("ERROR: " + str(exc))
+                await friday.tr_engine(event, "ERROR: " + str(exc))
                 os.remove(downloaded_file_name)
             else:
                 end = datetime.now()
                 ms_two = (end - start).seconds
                 os.remove(downloaded_file_name)
-                await event.edit(
+                await friday.tr_engine(event, 
                     "Uploaded to https://telegra.ph{} in {} seconds.".format(
                         media_urls[0], (ms + ms_two)
                     ),
@@ -85,7 +85,7 @@ async def _(event):
             if r_message.media:
                 if page_content != "":
                     title_of_page = page_content
-                downloaded_file_name = await borg.download_media(
+                downloaded_file_name = await friday.download_media(
                     r_message, Config.TMP_DOWNLOAD_DIRECTORY
                 )
                 m_list = None
@@ -98,14 +98,14 @@ async def _(event):
             response = telegraph.create_page(title_of_page, html_content=page_content)
             end = datetime.now()
             ms = (end - start).seconds
-            await event.edit(
+            await friday.tr_engine(event, 
                 "Pasted to https://telegra.ph/{} in {} seconds.".format(
                     response["path"], ms
                 ),
                 link_preview=True,
             )
     else:
-        await event.edit(
+        await friday.tr_engine(event, 
             "Reply to a message to get a permanent telegra.ph link. (Inspired by @ControllerBot)"
         )
 

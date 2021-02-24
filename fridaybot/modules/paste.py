@@ -37,7 +37,7 @@ async def _(event):
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.media:
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await friday.download_media(
                 previous_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 progress_callback=progress,
@@ -53,11 +53,11 @@ async def _(event):
         else:
             message = previous_message.message
     else:
-        await event.edit("Give Some Text Or File To Paste")
+        await friday.tr_engine(event, "Give Some Text Or File To Paste")
     py_file = ""
     name = "ok"
     if previous_message.media:
-        name = await borg.download_media(
+        name = await friday.download_media(
             previous_message, Config.TMP_DOWNLOAD_DIRECTORY, progress_callback=progress
         )
     downloaded_file_name = name
@@ -73,7 +73,7 @@ async def _(event):
         url = f"https://nekobin.com/{key}{py_file}"
         raw = f"https://nekobin.com/raw/{key}{py_file}"
         reply_text = f"Pasted Text [neko]({url})\n Raw ? [View Raw]({raw})"
-        await event.edit(reply_text)
+        await friday.tr_engine(event, reply_text)
     else:
         data = message
         key = (
@@ -85,7 +85,7 @@ async def _(event):
         url = f"https://nekobin.com/{key}"
         raw = f"https://nekobin.com/raw/{key}"
         reply_text = f"Pasted Text [neko]({url})\n Raw ? [View Raw]({raw})"
-        await event.edit(reply_text)
+        await friday.tr_engine(event, reply_text)
 
 
 CMD_HELP.update(

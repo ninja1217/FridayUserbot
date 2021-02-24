@@ -32,7 +32,7 @@ Meter Class : {Classe}
 Meter Score : {Meter}
 Cast : 
 {cast}"""
-    await borg.send_message(
+    await friday.send_message(
         event.chat_id,
         caption,
     )
