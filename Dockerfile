@@ -1,5 +1,5 @@
 # We Are Using KaliLinux Here
-FROM kalilinux/kali-rolling
+FROM ubuntu:latest
 # Set To Non Interactive Mode, So That It Doesn't Ask For Any Start-Up Configuration
 ARG DEBIAN_FRONTEND=noninteractive
 # Config Term - Xterm with support for 256 colors
