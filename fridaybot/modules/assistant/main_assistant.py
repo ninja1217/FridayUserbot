@@ -66,7 +66,7 @@ async def start(event):
             pass
         elif not already_added(event.sender_id):
             add_usersid_in_db(event.sender_id)
-        await tgfriday.send_file(
+        await tgbot.send_file(
             event.chat_id,
             file=mypic,
             caption=starttext,
@@ -107,7 +107,7 @@ async def users(event):
             users_list += ("==> {} \n").format(int(starked.chat_id))
         with io.BytesIO(str.encode(users_list)) as tedt_file:
             tedt_file.name = "userlist.txt"
-            await tgfriday.send_file(
+            await tgbot.send_file(
                 event.chat_id,
                 tedt_file,
                 force_document=True,
@@ -164,7 +164,7 @@ async def sed(event):
         return
     elif event.text is not None and event.media:
         bot_api_file_id = pack_bot_file_id(event.media)
-        await tgfriday.send_file(
+        await tgbot.send_file(
             user_id,
             file=bot_api_file_id,
             caption=event.text,
